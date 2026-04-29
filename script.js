@@ -222,7 +222,10 @@ const DEMO_APPS = [
 /* =============================
    STATE
    ============================= */
-let supabase = null;
+// Check if supabase is already defined before declaring
+if (typeof supabase === 'undefined') {
+    var supabase = null; 
+}
 let authSubscription = null;
 let currentUser = null;
 let userProfile = null;
