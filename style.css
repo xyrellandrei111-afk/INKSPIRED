@@ -939,5 +939,74 @@ section {
   transform: scale(1.1);
   box-shadow: 0 4px 20px rgba(235, 65, 116, 0.1);
 }
+/* ======================================================
+   INK SPIRED - Marketplace App Card Fix
+   ====================================================== */
+.app-card {
+    background: #ffffff !important; /* Solid white background */
+    border: 1px solid rgba(235, 65, 116, 0.15) !important;
+    border-radius: 24px !important;
+    padding: 16px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(235, 65, 116, 0.05) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    opacity: 1 !important; /* Forces visibility */
+    min-height: 380px;
+}
+
+.app-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 15px 45px rgba(235, 65, 116, 0.15) !important;
+}
+
+.app-card img {
+    width: 100% !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    border-radius: 18px !important;
+    background: #fdfdfd;
+}
+
+.app-card h3 {
+    font-family: "Cormorant Garamond", serif !important;
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
+    color: #2D2D2D !important;
+    margin-top: 8px;
+}
+
+.app-card p {
+    font-size: 0.85rem !important;
+    color: #6B6B6B !important;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.app-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(235, 65, 116, 0.08);
+}
+
+.app-card .price {
+    font-weight: 800 !important;
+    color: #EB4174 !important;
+    font-size: 1.1rem !important;
+}
+
+.app-card .add-btn {
+    background: linear-gradient(135deg, #EB4174, #F9E7FE) !important;
+    color: white !important;
+    padding: 8px 18px !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    cursor: pointer;
+}
 
 /*# sourceMappingURL=style.css.map */
