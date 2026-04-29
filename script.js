@@ -223,8 +223,9 @@ const DEMO_APPS = [
    STATE
    ============================= */
 // Check if supabase is already defined before declaring
+// This prevents the "already declared" crash
 if (typeof supabase === 'undefined') {
-    var supabase = null; 
+    var supabase = null;
 }
 let authSubscription = null;
 let currentUser = null;
