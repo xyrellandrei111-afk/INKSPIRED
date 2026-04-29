@@ -1008,5 +1008,24 @@ section {
     font-size: 0.8rem !important;
     cursor: pointer;
 }
+/* FORCE SOLID DESIGN FOR CARDS */
+.app-card, .product-card {
+    background: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    border: 1px solid rgba(235, 65, 116, 0.2) !important;
+    color: #1a1a1a !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+}
 
+/* Ensure text inside cards is pitch black and readable */
+.app-card h3, .card-name {
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+/* Fix the loader hang */
+#loader.hidden {
+    display: none !important;
+}
 /*# sourceMappingURL=style.css.map */
