@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INKSPIRED | Developer Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <section id="developerAuthScreen" class="auth-screen">
+    <div class="auth-card glass-panel">
+      <aside class="auth-aside">
+        <span class="eyebrow"><i class="fa-solid fa-code"></i> Developer Control Center</span>
+        <div class="brand-mark">INK<span>SPIRED</span></div>
+        <h1 class="auth-title">Launch software that still looks premium when the backend isn’t.</h1>
+        <p class="auth-copy">
+          Manage your catalog, review performance, and submit production-ready apps with richer product metadata. When Supabase is unavailable, the workspace drops into a persistent demo environment instead of failing closed.
+        </p>
+        <div class="auth-feature-list">
+          <div class="auth-feature">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <div>
+              <strong>Complete app publishing form</strong>
+              <div>Submit slugs, screenshots, feature lists, docs, support details, and download links.</div>
+            </div>
+          </div>
+          <div class="auth-feature">
+            <i class="fa-solid fa-wallet"></i>
+            <div>
+              <strong>Sales-aware overview</strong>
+              <div>Track estimated earnings, top performers, and recent marketplace activity in one place.</div>
+            </div>
+          </div>
+          <div class="auth-feature">
+            <i class="fa-solid fa-bolt"></i>
+            <div>
+              <strong>Demo fallback that persists</strong>
+              <div>Apps created in demo mode are stored locally and flow into the storefront fallback pipeline.</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <div class="auth-form-card glass-panel">
+        <h2>Developer Sign In</h2>
+        <p>Use your live developer account or open the demo workspace immediately.</p>
+        <form id="developerLoginForm" class="auth-form">
+          <div class="form-group">
+            <label for="developerEmail">Email</label>
+            <input id="developerEmail" class="form-input" type="email" placeholder="dev@inkspired.com" required />
+          </div>
+          <div class="form-group">
+            <label for="developerPassword">Password</label>
+            <input id="developerPassword" class="form-input" type="password" placeholder="••••••••" required />
+          </div>
+          <div class="auth-actions">
+            <button id="developerLoginBtn" class="btn-primary btn-block" type="submit">
+              <i class="fa-solid fa-lock"></i> Sign In
+            </button>
+            <button id="demoDeveloperBtn" class="btn-secondary btn-block" type="button">
+              <i class="fa-solid fa-flask"></i> Open Demo Workspace
+            </button>
+          </div>
+        </form>
+        <p id="developerAuthNote" class="support-note">Checking your developer session...</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="developerApp" class="dashboard-app hidden">
+    <div class="dashboard-shell">
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <div class="brand-mark">INK<span>SPIRED</span></div>
+          <span id="developerModePill" class="mode-pill">Loading</span>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-button active" data-dev-section="overview" type="button"><i class="fa-solid fa-chart-line"></i> Overview</button>
+          <button class="nav-button" data-dev-section="catalog" type="button"><i class="fa-solid fa-mobile-screen"></i> Catalog</button>
+          <button class="nav-button" data-dev-section="publish" type="button"><i class="fa-solid fa-cloud-arrow-up"></i> Publish</button>
+          <button class="nav-button" data-dev-section="sales" type="button"><i class="fa-solid fa-receipt"></i> Sales</button>
+          <button class="nav-button" data-dev-section="insights" type="button"><i class="fa-solid fa-lightbulb"></i> Insights</button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div id="developerModeNote" class="sidebar-note">Preparing developer workspace...</div>
+          <a class="btn-ghost" href="index.html"><i class="fa-solid fa-store"></i> Back to Store</a>
+          <button id="logoutDeveloperBtn" class="btn-danger" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div class="topbar-title">
+            <h1 id="developerIdentity">Developer</h1>
+            <p id="developerTopbarText">Loading workspace...</p>
+          </div>
+          <div class="topbar-actions">
+            <button id="refreshDeveloperBtn" class="btn-secondary" type="button"><i class="fa-solid fa-rotate"></i> Refresh Data</button>
+          </div>
+        </header>
+
+        <main>
+          <section class="dashboard-section" data-dev-panel="overview">
+            <div class="card-grid">
+              <article class="metric-card glass-panel">
+                <h3>Total Apps</h3>
+                <div id="metricTotalApps" class="metric-value">0</div>
+                <div class="metric-meta">Listings under your profile</div>
+              </article>
+              <article class="metric-card glass-panel">
+                <h3>Approved Apps</h3>
+                <div id="metricApprovedApps" class="metric-value">0</div>
+                <div class="metric-meta">Live on the marketplace</div>
+              </article>
+              <article class="metric-card glass-panel">
+                <h3>Pending Review</h3>
+                <div id="metricPendingApps" class="metric-value">0</div>
+                <div class="metric-meta">Awaiting moderation</div>
+              </article>
+              <article class="metric-card glass-panel">
+                <h3>Total Downloads</h3>
+                <div id="metricTotalDownloads" class="metric-value">0</div>
+                <div class="metric-meta">Marketplace momentum</div>
+              </article>
+              <article class="metric-card glass-panel">
+                <h3>Average Rating</h3>
+                <div id="metricAvgRating" class="metric-value">0.0</div>
+                <div class="metric-meta">Across your catalog</div>
+              </article>
+              <article class="metric-card glass-panel">
+                <h3>Estimated Earnings</h3>
+                <div id="metricEstimatedEarnings" class="metric-value">₱0</div>
+                <div id="developerRevenueSummary" class="metric-meta">Waiting for sales data</div>
+              </article>
+            </div>
+
+            <div class="split-layout">
+              <article class="panel glass-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Top Performer</h3>
+                    <p>The app currently carrying the most marketplace pull.</p>
+                  </div>
+                </div>
+                <div id="developerTopPerformer"></div>
+              </article>
+
+              <article class="panel glass-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Recent Activity</h3>
+                    <p>Latest sales and publishing events.</p>
+                  </div>
+                </div>
+                <div id="developerRecentActivity" class="activity-list"></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="dashboard-section hidden" data-dev-panel="catalog">
+            <article class="panel glass-panel">
+              <div class="toolbar">
+                <div>
+                  <h3>Your Catalog</h3>
+                  <p>Search and review every app under your developer profile.</p>
+                </div>
+                <div class="toolbar-actions">
+                  <input id="developerSearchInput" class="form-input" type="search" placeholder="Search apps, tags, categories..." />
+                </div>
+              </div>
+
+              <div class="toolbar-filters">
+                <button class="chip-filter active" type="button" data-status-filter="all">All</button>
+                <button class="chip-filter" type="button" data-status-filter="approved">Approved</button>
+                <button class="chip-filter" type="button" data-status-filter="pending">Pending</button>
+                <button class="chip-filter" type="button" data-status-filter="rejected">Rejected</button>
+              </div>
+
+              <div id="developerAppsGrid" class="catalog-grid" style="margin-top:18px"></div>
+            </article>
+          </section>
+
+          <section class="dashboard-section hidden" data-dev-panel="publish">
+            <div class="split-layout">
+              <article class="form-card glass-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Publish New App</h3>
+                    <p>Submit a complete, storefront-ready product entry with richer marketplace metadata.</p>
+                  </div>
+                </div>
+
+                <form id="publishAppForm" class="auth-form">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="publishName">App Name</label>
+                      <input id="publishName" class="form-input" type="text" placeholder="InkFlow Pro" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="publishSlug">Slug</label>
+                      <input id="publishSlug" class="form-input" type="text" placeholder="inkflow-pro" />
+                    </div>
+                  </div>
+
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="publishCategory">Category</label>
+                      <select id="publishCategory" class="form-input">
+                        <option value="Design">Design</option>
+                        <option value="Productivity">Productivity</option>
+                        <option value="Writing">Writing</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Developer">Developer</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Development">Development</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Music">Music</option>
+                        <option value="Video">Video</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Education">Education</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="publishPrice">Price</label>
+                      <input id="publishPrice" class="form-input" type="number" min="0" step="0.01" value="0" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="publishShortDesc">Short Description</label>
+                    <input id="publishShortDesc" class="form-input" type="text" placeholder="A storefront-ready one-liner for product cards." />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="publishDescription">Full Description</label>
+                    <textarea id="publishDescription" class="form-input" placeholder="Describe the product, its polish, and who it is for." required></textarea>
+                  </div>
+
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="publishVersion">Version</label>
+                      <input id="publishVersion" class="form-input" type="text" value="1.0.0" />
+                    </div>
+                    <div class="form-group">
+                      <label for="publishSize">Size</label>
+                      <input id="publishSize" class="form-input" type="text" placeholder="120 MB" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="publishTags">Tags</label>
+                    <input id="publishTags" class="form-input" type="text" placeholder="design, workflow, automation" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="publishFeatures">Features</label>
+                    <textarea id="publishFeatures" class="form-input" placeholder="One feature per line"></textarea>
+                  </div>
+
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="publishIcon">Icon URL</label>
+                      <input id="publishIcon" class="form-input" type="url" placeholder="https://example.com/icon.jpg" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="publishScreenshots">Screenshots</label>
+                      <input id="publishScreenshots" class="form-input" type="text" placeholder="Comma-separated image URLs" />
+                    </div>
+                  </div>
+
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="publishDownload">Download URL</label>
+                      <input id="publishDownload" class="form-input" type="url" placeholder="https://example.com/download.zip" />
+                    </div>
+                    <div class="form-group">
+                      <label for="publishDocs">Documentation URL</label>
+                      <input id="publishDocs" class="form-input" type="url" placeholder="https://example.com/docs" />
+                    </div>
+                  </div>
+
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="publishSupportEmail">Support Email</label>
+                      <input id="publishSupportEmail" class="form-input" type="email" placeholder="support@example.com" />
+                    </div>
+                    <div class="form-group">
+                      <label for="publishCompatibility">Compatibility</label>
+                      <input id="publishCompatibility" class="form-input" type="text" placeholder="Windows, macOS, Web" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="publishRequirements">Requirements</label>
+                    <textarea id="publishRequirements" class="form-input" placeholder="System requirements, account dependencies, or runtime notes"></textarea>
+                  </div>
+
+                  <button id="publishSubmitBtn" class="btn-primary" type="submit">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Submit App
+                  </button>
+                </form>
+              </article>
+
+              <article class="panel glass-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Storefront Preview</h3>
+                    <p>See how your new release starts to present on a premium product card.</p>
+                  </div>
+                </div>
+                <div id="publishPreview"></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="dashboard-section hidden" data-dev-panel="sales">
+            <article class="table-card glass-panel">
+              <div class="panel-header">
+                <div>
+                  <h3>Sales Timeline</h3>
+                  <p>Net earnings, sale source, and marketplace activity tied to your developer profile.</p>
+                </div>
+              </div>
+              <div id="developerSalesTable"></div>
+            </article>
+          </section>
+
+          <section class="dashboard-section hidden" data-dev-panel="insights">
+            <div class="split-layout">
+              <article class="panel glass-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Catalog Performance</h3>
+                    <p>Relative pull by app based on downloads.</p>
+                  </div>
+                </div>
+                <div id="developerBreakdownList" class="progress-list"></div>
+              </article>
+
+              <div class="stack">
+                <article class="panel glass-panel">
+                  <div class="panel-header">
+                    <div>
+                      <h3>Publishing Notes</h3>
+                      <p>How your release pipeline is currently shaped.</p>
+                    </div>
+                  </div>
+                  <div id="developerPublishingInsights"></div>
+                </article>
+
+                <article class="panel glass-panel">
+                  <div class="panel-header">
+                    <div>
+                      <h3>Recent Reviews</h3>
+                      <p>Fresh customer sentiment from your catalog.</p>
+                    </div>
+                  </div>
+                  <div id="developerReviewInsights" class="stack"></div>
+                </article>
+              </div>
+            </div>
+          </section>
+        </main>
+      </section>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="dashboard-shared.js"></script>
+  <script src="developer-dashboard.js"></script>
+</body>
+</html>

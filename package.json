@@ -1,0 +1,15 @@
+{
+  "name": "inkspired-marketplace",
+  "version": "1.0.0",
+  "description": "Premium app marketplace for creative tools",
+  "scripts": {
+    "build-css": "sass styles.scss style.css",
+    "watch-css": "sass --watch styles.scss style.css",
+    "build": "npm run build-css",
+    "serve": "npx serve .",
+    "check": "node --check script.js && node --check dashboard-shared.js && node --check developer-dashboard.js && node --check admin-dashboard.js"
+  },
+  "devDependencies": {
+    "sass": "^1.77.8"
+  }
+}

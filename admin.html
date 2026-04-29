@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INKSPIRED | Admin Control Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <section id="adminAuthScreen" class="auth-screen">
+    <div class="auth-card glass-panel">
+      <aside class="auth-aside">
+        <span class="eyebrow"><i class="fa-solid fa-shield-halved"></i> System Moderation</span>
+        <div class="brand-mark">INK<span>SPIRED</span></div>
+        <h1 class="auth-title">Run the marketplace like a premium product, not a spreadsheet.</h1>
+        <p class="auth-copy">
+          Moderate submissions, monitor revenue, review catalog health, and keep user, order, and review data organized. If live connectivity fails, the control room can still operate in demo mode with local system data.
+        </p>
+        <div class="auth-feature-list">
+          <div class="auth-feature">
+            <i class="fa-solid fa-crown"></i>
+            <div>
+              <strong>Real moderation controls</strong>
+              <div>Approve, reject, feature, or delete apps from a unified app management view.</div>
+            </div>
+          </div>
+          <div class="auth-feature">
+            <i class="fa-solid fa-chart-pie"></i>
+            <div>
+              <strong>Marketplace analytics</strong>
+              <div>Track revenue, orders, category health, user mix, and pending inventory at a glance.</div>
+            </div>
+          </div>
+          <div class="auth-feature">
+            <i class="fa-solid fa-database"></i>
+            <div>
+              <strong>Demo-safe control room</strong>
+              <div>Local demo mode mirrors storefront fallback behavior so the whole system can still be exercised offline.</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <div class="auth-form-card glass-panel">
+        <h2>Admin Sign In</h2>
+        <p>Enter the live control room or inspect the local demo marketplace.</p>
+        <form id="adminLoginForm" class="auth-form">
+          <div class="form-group">
+            <label for="adminEmail">Email</label>
+            <input id="adminEmail" class="form-input" type="email" placeholder="admin@inkspired.com" required />
+          </div>
+          <div class="form-group">
+            <label for="adminPassword">Password</label>
+            <input id="adminPassword" class="form-input" type="password" placeholder="••••••••" required />
+          </div>
+          <div class="auth-actions">
+            <button id="adminLoginBtn" class="btn-primary btn-block" type="submit">
+              <i class="fa-solid fa-shield"></i> Sign In
+            </button>
+            <button id="demoAdminBtn" class="btn-secondary btn-block" type="button">
+              <i class="fa-solid fa-flask"></i> Open Demo Control Room
+            </button>
+          </div>
+        </form>
+        <p id="adminAuthNote" class="support-note">Checking your admin session...</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="adminApp" class="dashboard-app hidden">
+    <div class="dashboard-shell">
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <div class="brand-mark">INK<span>SPIRED</span></div>
+          <span id="adminModePill" class="mode-pill">Loading</span>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-button active" data-admin-section="overview" type="button"><i class="fa-solid fa-chart-pie"></i> Overview</button>
+          <button class="nav-button" data-admin-section="apps" type="button"><i class="fa-solid fa-mobile-screen"></i> Apps</button>
+          <button class="nav-button" data-admin-section="orders" type="button"><i class="fa-solid fa-receipt"></i> Orders</button>
+          <button class="nav-button" data-admin-section="users" type="button"><i class="fa-solid fa-users"></i> Users</button>
+          <button class="nav-button" data-admin-section="reviews" type="button"><i class="fa-solid fa-star"></i> Reviews</button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div id="adminModeNote" class="sidebar-note">Preparing control room...</div>
+          <a class="btn-ghost" href="index.html"><i class="fa-solid fa-store"></i> Back to Store</a>
+          <button id="logoutAdminBtn" class="btn-danger" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div class="topbar-title">
+            <h1 id="adminIdentity">Admin</h1>
+            <p id="adminTopbarText">Loading control room...</p>
+          </div>
+          <div class="topbar-actions">
+            <button id="refreshAdminBtn" class="btn-secondary" type="button"><i class="fa-solid fa-rotate"></i> Refresh Data</button>
+          </div>
+        </header>
+
+        <main>
+          <section class="dashboard-section" data-admin-panel="overview">
+            <div class="card-grid">
+              <article class="metric-card glass-panel">
+                <h3>Total Revenue</h3>
+                <div id="adminMetricRevenue" class="metric-value">₱0</div>
+                <div id="adminSystemSummary" class="metric-meta">Loading user mix...</div>
+              </article>
+              <article class="metric-card glass-panel">
+                <h3>Orders</h3>
+                <div id="adminMetricOrders" class="metric-value">0</div>
+                <div class="metric-meta">Remote plus local fallback activity</div>
+              </article>
+              <article class="metric-card glass-panel">
+                <h3>Total Apps</h3>
+                <div id="adminMetricApps" class="metric-value">0</div>
+                <div class="metric-meta">Live and queued catalog entries</div>
+              </article>
+              <article class="metric-card glass-panel">
+                <h3>Total Users</h3>
+                <div id="adminMetricUsers" class="metric-value">0</div>
+                <div class="metric-meta">Profiles in the marketplace</div>
+              </article>
+              <article class="metric-card glass-panel">
+                <h3>Pending Apps</h3>
+                <div id="adminMetricPendingApps" class="metric-value">0</div>
+                <div class="metric-meta">Awaiting moderation</div>
+              </article>
+              <article class="metric-card glass-panel">
+                <h3>Approved Apps</h3>
+                <div id="adminMetricApprovedApps" class="metric-value">0</div>
+                <div class="metric-meta">Currently visible in the store</div>
+              </article>
+            </div>
+
+            <div class="split-layout">
+              <article class="panel glass-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Recent Marketplace Activity</h3>
+                    <p>Latest order flow and incoming catalog changes.</p>
+                  </div>
+                </div>
+                <div id="adminActivityFeed" class="activity-list"></div>
+              </article>
+
+              <article class="panel glass-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Catalog Health</h3>
+                    <p>Category distribution across the current app inventory.</p>
+                  </div>
+                </div>
+                <div id="adminHealthBoard" class="progress-list"></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="dashboard-section hidden" data-admin-panel="apps">
+            <article class="panel glass-panel">
+              <div class="toolbar">
+                <div>
+                  <h3>App Moderation</h3>
+                  <p>Search, approve, reject, feature, or delete any listing in the marketplace.</p>
+                </div>
+                <div class="toolbar-actions">
+                  <input id="adminAppSearch" class="form-input" type="search" placeholder="Search apps, creators, categories..." />
+                </div>
+              </div>
+
+              <div class="toolbar-filters">
+                <button class="chip-filter active" type="button" data-admin-app-status="all">All</button>
+                <button class="chip-filter" type="button" data-admin-app-status="pending">Pending</button>
+                <button class="chip-filter" type="button" data-admin-app-status="approved">Approved</button>
+                <button class="chip-filter" type="button" data-admin-app-status="rejected">Rejected</button>
+              </div>
+
+              <div id="adminAppsGrid" class="moderation-grid" style="margin-top:18px"></div>
+            </article>
+          </section>
+
+          <section class="dashboard-section hidden" data-admin-panel="orders">
+            <article class="table-card glass-panel">
+              <div class="toolbar">
+                <div>
+                  <h3>Order Ledger</h3>
+                  <p>Review both remote marketplace orders and browser-local fallback checkouts.</p>
+                </div>
+                <div class="toolbar-actions">
+                  <select id="adminOrderStatus" class="form-input">
+                    <option value="all">All statuses</option>
+                    <option value="pending">Pending</option>
+                    <option value="paid">Paid</option>
+                    <option value="processing">Processing</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+              </div>
+              <div id="adminOrdersTable"></div>
+            </article>
+          </section>
+
+          <section class="dashboard-section hidden" data-admin-panel="users">
+            <article class="panel glass-panel">
+              <div class="toolbar">
+                <div>
+                  <h3>User Directory</h3>
+                  <p>Profiles across buyers, developers, and administrators.</p>
+                </div>
+                <div class="toolbar-actions">
+                  <input id="adminUserSearch" class="form-input" type="search" placeholder="Search users by name, email, role..." />
+                </div>
+              </div>
+              <div id="adminUsersGrid" class="spotlight-grid"></div>
+            </article>
+          </section>
+
+          <section class="dashboard-section hidden" data-admin-panel="reviews">
+            <article class="panel glass-panel">
+              <div class="toolbar">
+                <div>
+                  <h3>Review Moderation</h3>
+                  <p>Inspect review quality and remove problematic marketplace feedback.</p>
+                </div>
+                <div class="toolbar-actions">
+                  <input id="adminReviewSearch" class="form-input" type="search" placeholder="Search reviewer, app, or comment..." />
+                </div>
+              </div>
+              <div id="adminReviewsGrid" class="review-grid"></div>
+            </article>
+          </section>
+        </main>
+      </section>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="dashboard-shared.js"></script>
+  <script src="admin-dashboard.js"></script>
+</body>
+</html>

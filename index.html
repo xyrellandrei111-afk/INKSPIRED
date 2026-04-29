@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INKSPIRED | Premium App Marketplace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-mark">
+        <span class="loader-orbit orbit-a"></span>
+        <span class="loader-orbit orbit-b"></span>
+        <div class="loader-logo">INK<span>SPIRED</span></div>
+      </div>
+      <p class="loader-copy">Curating premium creative tools for your next build.</p>
+      <div class="loader-bar">
+        <div class="loader-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="bgCanvas"></canvas>
+  <div id="mouseGlow"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <nav id="navbar">
+    <a class="nav-logo" href="#hero">INK<span>SPIRED</span></a>
+    <div class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#featured">Featured</a>
+      <a href="#collections">Collections</a>
+      <a href="#browse">Marketplace</a>
+      <a href="#creators">Creators</a>
+      <a href="#library" id="navLibrary" class="hidden">My Library</a>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-search-wrap">
+        <input type="text" id="navSearch" class="nav-search" placeholder="Search apps, tags, creators..." oninput="handleSearch(this.value)" />
+        <i class="fa-solid fa-magnifying-glass nav-search-icon"></i>
+      </div>
+      <button class="status-pill" id="dataStatusBadge" type="button">
+        <i class="fa-solid fa-signal"></i>
+        <span>Loading</span>
+      </button>
+      <button class="cart-btn" type="button" onclick="toggleCart()" aria-label="Open cart">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span id="cart-count">0</span>
+      </button>
+      <div id="navAuthArea">
+        <button class="auth-btn" type="button" onclick="openAuthModal('login')">
+          <i class="fa-solid fa-user"></i> Sign In
+        </button>
+      </div>
+      <button class="hamburger" id="hamburger" type="button" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <aside id="mobileMenu" class="mobile-menu" aria-hidden="true">
+    <button class="mobile-menu-close" type="button" onclick="toggleMobileMenu(false)" aria-label="Close menu">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <a href="#hero" onclick="toggleMobileMenu(false)">Home</a>
+    <a href="#featured" onclick="toggleMobileMenu(false)">Featured</a>
+    <a href="#collections" onclick="toggleMobileMenu(false)">Collections</a>
+    <a href="#browse" onclick="toggleMobileMenu(false)">Marketplace</a>
+    <a href="#creators" onclick="toggleMobileMenu(false)">Creators</a>
+    <button class="btn-primary mobile-auth-cta" type="button" onclick="openAuthModal('login'); toggleMobileMenu(false)">
+      <i class="fa-solid fa-user"></i> Sign In
+    </button>
+  </aside>
+
+  <main>
+    <section id="hero">
+      <div class="hero-copy">
+        <div class="hero-eyebrow">
+          <span class="hero-badge"><i class="fa-solid fa-gem"></i> Curated Premium Marketplace</span>
+          <span class="hero-mode" id="heroModeNote">Booting experience...</span>
+        </div>
+        <h1 class="hero-title">Apps that feel<br /><span class="gradient-text">crafted, not cloned.</span></h1>
+        <p class="hero-sub">
+          Discover polished tools for design, writing, dev workflows, and digital business. INKSPIRED blends curated software, creator-first storefronts, and a resilient experience that stays beautiful even when the backend blinks.
+        </p>
+        <div class="hero-btns">
+          <button class="btn-primary" type="button" onclick="document.getElementById('browse').scrollIntoView({ behavior: 'smooth' })">
+            <i class="fa-solid fa-compass"></i> Explore Marketplace
+          </button>
+          <button class="btn-ghost" type="button" onclick="openAuthModal('register')">
+            <i class="fa-solid fa-sparkles"></i> Join as Creator
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <strong class="counter" data-target="12400">0</strong>
+            <span>Curated Listings</span>
+          </div>
+          <div class="hero-stat">
+            <strong class="counter" data-target="84000">0</strong>
+            <span>Creative Buyers</span>
+          </div>
+          <div class="hero-stat">
+            <strong class="counter" data-target="3200">0</strong>
+            <span>Indie Developers</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-stage">
+        <div class="hero-showcase glass-card">
+          <div class="showcase-top">
+            <div class="showcase-brand">
+              <div class="showcase-icon"><i class="fa-solid fa-pen-ruler"></i></div>
+              <div>
+                <div class="showcase-name">InkFlow Pro</div>
+                <div class="showcase-meta">Design System Painter</div>
+              </div>
+            </div>
+            <div class="showcase-price">₱850</div>
+          </div>
+          <div class="showcase-screen">
+            <div class="showcase-gradient"></div>
+            <div class="showcase-panel panel-main">
+              <div class="panel-line long"></div>
+              <div class="panel-line mid"></div>
+              <div class="panel-grid">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="showcase-panel panel-float">
+              <div class="panel-chip">AI Brushes</div>
+              <div class="panel-chip">Live Layers</div>
+              <div class="panel-chip">Export Packs</div>
+            </div>
+          </div>
+          <div class="showcase-bottom">
+            <div class="showcase-rating">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star-half-stroke"></i>
+              <span>4.8 rating</span>
+            </div>
+            <button class="showcase-cta" type="button" onclick="document.getElementById('featured').scrollIntoView({ behavior: 'smooth' })">See Top Picks</button>
+          </div>
+        </div>
+
+        <div class="hero-flyout flyout-a">
+          <i class="fa-solid fa-bolt"></i>
+          <div>
+            <strong>3s Fail-safe</strong>
+            <span>Never stuck on loading</span>
+          </div>
+        </div>
+        <div class="hero-flyout flyout-b">
+          <i class="fa-solid fa-heart"></i>
+          <div>
+            <strong>Wishlist + Library</strong>
+            <span>Synced to local fallback</span>
+          </div>
+        </div>
+        <div class="hero-glow glow-a"></div>
+        <div class="hero-glow glow-b"></div>
+      </div>
+    </section>
+
+    <section id="pulse" class="pulse-section">
+      <div class="section-header compact">
+        <p class="section-eyebrow"><i class="fa-solid fa-wave-square"></i> Marketplace Pulse</p>
+        <h2 class="section-title">What’s happening <span class="gradient-text">right now</span></h2>
+      </div>
+      <div class="pulse-grid">
+        <article class="pulse-card glass-card">
+          <div class="pulse-icon coral"><i class="fa-solid fa-fire"></i></div>
+          <div>
+            <h3>Trending this hour</h3>
+            <p id="trendingHeadline">Loading hot apps...</p>
+          </div>
+        </article>
+        <article class="pulse-card glass-card">
+          <div class="pulse-icon mint"><i class="fa-solid fa-layer-group"></i></div>
+          <div>
+            <h3>Mode status</h3>
+            <p id="storeModeText">Preparing data source...</p>
+          </div>
+        </article>
+        <article class="pulse-card glass-card">
+          <div class="pulse-icon gold"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div>
+            <h3>Recent searches</h3>
+            <div id="recentSearches" class="search-chip-row"></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="featured">
+      <div class="section-header">
+        <p class="section-eyebrow"><i class="fa-solid fa-crown"></i> Editor Highlights</p>
+        <h2 class="section-title">Featured <span class="gradient-text">Releases</span></h2>
+        <p class="section-sub">Curated releases with standout craft, presentation, and creator support.</p>
+      </div>
+      <div class="carousel-shell">
+        <button class="carousel-btn prev" type="button" onclick="scrollCarousel(-1)" aria-label="Previous featured apps">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div id="featuredCarousel" class="featured-carousel">
+          <div class="carousel-loading"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading featured apps...</div>
+        </div>
+        <button class="carousel-btn next" type="button" onclick="scrollCarousel(1)" aria-label="Next featured apps">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <section id="collections">
+      <div class="section-header">
+        <p class="section-eyebrow"><i class="fa-solid fa-stars"></i> Smart Discovery</p>
+        <h2 class="section-title">Collections with <span class="gradient-text">actual taste</span></h2>
+        <p class="section-sub">Browse dynamic sets pulled from your activity, marketplace momentum, and fresh releases.</p>
+      </div>
+
+      <div class="collection-grid">
+        <article class="collection-card collection-card-large glass-card">
+          <div class="collection-head">
+            <div>
+              <span class="collection-label">For You</span>
+              <h3>Best match for your current filters</h3>
+            </div>
+            <span class="collection-tag">Adaptive</span>
+          </div>
+          <div id="forYouGrid" class="mini-app-grid"></div>
+        </article>
+
+        <article class="collection-card glass-card">
+          <div class="collection-head">
+            <div>
+              <span class="collection-label">Trending</span>
+              <h3>Momentum board</h3>
+            </div>
+            <span class="collection-tag">Downloads</span>
+          </div>
+          <div id="trendingScroll" class="mini-rail">
+            <div class="scroll-loading"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+          </div>
+        </article>
+
+        <article class="collection-card glass-card">
+          <div class="collection-head">
+            <div>
+              <span class="collection-label">Recently Viewed</span>
+              <h3>Your revisit lane</h3>
+            </div>
+            <span class="collection-tag">Local</span>
+          </div>
+          <div id="recentlyViewedRail" class="mini-rail empty-state-inline">
+            <p>Open an app and it will appear here.</p>
+          </div>
+        </article>
+
+        <article class="collection-card glass-card">
+          <div class="collection-head">
+            <div>
+              <span class="collection-label">Just Released</span>
+              <h3>Fresh drops</h3>
+            </div>
+            <span class="collection-tag">Newest</span>
+          </div>
+          <div id="newReleasesScroll" class="mini-rail">
+            <div class="scroll-loading"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="browse">
+      <div class="section-header">
+        <p class="section-eyebrow"><i class="fa-solid fa-grid-2"></i> Full Marketplace</p>
+        <h2 class="section-title">Browse all <span class="gradient-text">premium apps</span></h2>
+        <p class="section-sub">Filter by category, sort by momentum, and build a cart that survives downtime gracefully.</p>
+      </div>
+
+      <div class="browse-shell glass-card">
+        <div class="browse-toolbar">
+          <div class="toolbar-left">
+            <div class="category-tabs" id="categoryTabs">
+              <button class="tab active" data-cat="All" type="button">All</button>
+              <button class="tab" data-cat="Design" type="button">Design</button>
+              <button class="tab" data-cat="Productivity" type="button">Productivity</button>
+              <button class="tab" data-cat="Writing" type="button">Writing</button>
+              <button class="tab" data-cat="Marketing" type="button">Marketing</button>
+              <button class="tab" data-cat="Developer" type="button">Developer</button>
+              <button class="tab" data-cat="Finance" type="button">Finance</button>
+            </div>
+            <div id="activeFilterSummary" class="filter-summary">Showing all premium releases.</div>
+          </div>
+
+          <div class="toolbar-right">
+            <div class="sort-wrap">
+              <label for="sortSelect">Sort</label>
+              <select id="sortSelect" class="sort-select" onchange="handleSort(this.value)">
+                <option value="newest">Newest First</option>
+                <option value="popular">Most Popular</option>
+                <option value="rating">Top Rated</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="free">Free Only</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div id="appGrid" class="app-grid">
+          <div class="products-loading"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading apps...</div>
+        </div>
+
+        <div id="loadMoreWrap" class="load-more-wrap" style="display:none">
+          <button id="loadMoreBtn" class="btn-ghost" type="button" onclick="loadMoreApps()">
+            <i class="fa-solid fa-plus"></i> Load More
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="creators">
+      <div class="section-header">
+        <p class="section-eyebrow"><i class="fa-solid fa-code"></i> Creator Spotlight</p>
+        <h2 class="section-title">Built by <span class="gradient-text">serious makers</span></h2>
+        <p class="section-sub">A storefront for indie software teams who care about product detail, not just shipping volume.</p>
+      </div>
+
+      <div class="creator-layout">
+        <article class="creator-feature glass-card">
+          <div class="creator-copy">
+            <span class="collection-label">Launch on INKSPIRED</span>
+            <h3>Sell polished software with a premium presentation.</h3>
+            <p>
+              Upload your app, show off features with rich visuals, and keep your storefront elegant even when the network is unreliable. The platform supports live data plus graceful local fallback for browsing continuity.
+            </p>
+            <div class="hero-btns creator-actions">
+              <a href="developer.html" class="btn-primary"><i class="fa-solid fa-rocket"></i> Open Developer Portal</a>
+              <button class="btn-ghost" type="button" onclick="openAuthModal('register')"><i class="fa-solid fa-user-plus"></i> Create Account</button>
+            </div>
+          </div>
+          <div id="creatorSpotlight" class="creator-stack"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">INK<span>SPIRED</span></div>
+        <p class="footer-tagline">A curated app marketplace for designers, writers, developers, and creative operators.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#featured">Featured</a>
+        <a href="#collections">Collections</a>
+        <a href="#browse">Marketplace</a>
+        <a href="#" id="footerLibraryLink">My Library</a>
+        <a href="developer.html">Developer Portal</a>
+        <a href="admin.html">Admin</a>
+      </div>
+      <div class="footer-note">
+        <span id="footerModeNote">Preparing storefront mode...</span>
+        <span>Built for resilient browsing.</span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cartOverlay" class="cart-overlay" onclick="toggleCart(false)"></div>
+  <aside id="cartSidebar" class="cart-sidebar" aria-hidden="true">
+    <div class="cart-header">
+      <h2><i class="fa-solid fa-bag-shopping"></i> Your Cart</h2>
+      <button type="button" onclick="toggleCart(false)" aria-label="Close cart">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="coupon-row">
+        <input type="text" id="couponInput" class="form-input" placeholder="Coupon code" />
+        <button class="btn-ghost" type="button" onclick="applyCoupon()">Apply</button>
+      </div>
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <strong id="cartTotal">₱ 0.00</strong>
+      </div>
+      <div id="discountRow" class="cart-discount-row" style="display:none">
+        <span>Discount</span>
+        <strong id="discountAmount">-₱ 0.00</strong>
+      </div>
+      <button class="btn-primary w-full" type="button" onclick="openCheckout()">
+        <i class="fa-solid fa-lock"></i> Secure Checkout
+      </button>
+    </div>
+  </aside>
+
+  <div id="appModal" class="modal-overlay">
+    <div class="modal-box app-modal-box">
+      <button class="modal-close" type="button" onclick="closeAppModal()" aria-label="Close app details">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="appModalContent"></div>
+    </div>
+  </div>
+
+  <div id="authModal" class="modal-overlay">
+    <div class="modal-box auth-box">
+      <button class="modal-close" type="button" onclick="closeAuthModal()" aria-label="Close auth modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab" type="button" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab" id="registerTab" type="button" onclick="switchAuthTab('register')">Create Account</button>
+      </div>
+
+      <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+        <div class="auth-logo">INK<span>SPIRED</span></div>
+        <p class="auth-sub">Welcome back to the premium marketplace.</p>
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required />
+        </div>
+        <button id="loginBtn" class="btn-primary w-full" type="submit">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+        </button>
+        <p class="auth-switch">New here? <a onclick="switchAuthTab('register')">Create an account</a></p>
+      </form>
+
+      <form id="registerForm" class="auth-form hidden" style="display:none" onsubmit="handleRegister(event)">
+        <div class="auth-logo">INK<span>SPIRED</span></div>
+        <p class="auth-sub">Join as a collector or a creator.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="regName">Full Name</label>
+            <input type="text" id="regName" class="form-input" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="you@example.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="regPassword">Password</label>
+          <input type="password" id="regPassword" class="form-input" placeholder="Minimum 6 characters" required />
+        </div>
+        <div class="form-group">
+          <label for="regRole">I am a...</label>
+          <select id="regRole" class="form-input">
+            <option value="customer">Customer / Buyer</option>
+            <option value="developer">Developer / Seller</option>
+          </select>
+        </div>
+        <button id="registerBtn" class="btn-primary w-full" type="submit">
+          <i class="fa-solid fa-user-plus"></i> Create Account
+        </button>
+        <p class="auth-switch">Already have an account? <a onclick="switchAuthTab('login')">Sign in</a></p>
+      </form>
+    </div>
+  </div>
+
+  <div id="checkoutModal" class="modal-overlay">
+    <div class="modal-box checkout-box">
+      <button class="modal-close" type="button" onclick="closeCheckout()" aria-label="Close checkout">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 class="modal-title"><i class="fa-solid fa-lock"></i> Secure Checkout</h2>
+      <form id="orderForm" onsubmit="submitOrder(event)">
+        <div class="checkout-steps">
+          <div class="checkout-step active">
+            <h3 class="step-title">Your Details</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="custName">Full Name</label>
+                <input type="text" id="custName" class="form-input" placeholder="Juan dela Cruz" required />
+              </div>
+              <div class="form-group">
+                <label for="custEmail">Email</label>
+                <input type="email" id="custEmail" class="form-input" placeholder="juan@email.com" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="custPhone">Phone</label>
+                <input type="tel" id="custPhone" class="form-input" placeholder="+63 9XX XXX XXXX" required />
+              </div>
+              <div class="form-group">
+                <label for="custAddress">Address</label>
+                <input type="text" id="custAddress" class="form-input" placeholder="Street, City, Province" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="checkout-step active">
+            <h3 class="step-title">Order Summary</h3>
+            <div class="order-summary-box">
+              <div id="orderSummaryItems"></div>
+              <div class="order-total-row">
+                <span>Total</span>
+                <strong id="finalTotal">₱ 0.00</strong>
+              </div>
+            </div>
+            <div class="payment-method">
+              <div class="pm-option active">
+                <i class="fa-solid fa-money-bill-wave"></i> Cash on Delivery
+              </div>
+            </div>
+          </div>
+        </div>
+        <button id="checkoutBtn" class="btn-primary w-full" type="submit">
+          <i class="fa-solid fa-check-circle"></i> Confirm Order
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="successModal" class="modal-overlay">
+    <div class="modal-box success-box">
+      <div class="success-anim"><i class="fa-solid fa-circle-check"></i></div>
+      <h2>Order Confirmed</h2>
+      <p>Your checkout completed successfully. If the backend is offline, your order is still stored locally for a smooth library experience.</p>
+      <div id="successOrderId" class="success-order-id"></div>
+      <button class="btn-primary" type="button" onclick="closeSuccess()">Continue Shopping</button>
+    </div>
+  </div>
+
+  <div id="libraryModal" class="modal-overlay">
+    <div class="modal-box library-box">
+      <button class="modal-close" type="button" onclick="closeLibrary()" aria-label="Close library">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 class="modal-title"><i class="fa-solid fa-book-open"></i> My Library</h2>
+      <div id="libraryContent" class="library-grid"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
