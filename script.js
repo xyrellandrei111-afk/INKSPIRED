@@ -632,6 +632,8 @@ async function bootstrapApp() {
   updateNavAuth();
   updateModeUI('loading');
   showSkeletons();
+   // Emergency Exit: Force hide loader after 3 seconds no matter what
+  setTimeout(hideLoader, 3000);
 
   loaderFailsafeId = window.setTimeout(() => {
     ensureRenderableContent();
