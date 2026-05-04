@@ -5,8 +5,8 @@
 
 // Admin credentials (in production, use Supabase auth with role-based access)
 const ADMIN_CREDENTIALS = {
-  email: 'admin@inkspired.com',
-  password: 'inkspired2026admin' // In production, use proper hashed passwords
+  email: 'xyrellandrei111@gmail.com',
+  password: 'ANDOY123' // In production, use proper hashed passwords
 };
 
 // DOM Elements
