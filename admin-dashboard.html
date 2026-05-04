@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | INKSPIRED</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_append.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <!-- Admin Dashboard Container -->
+  <div id="adminDashboard" class="admin-dashboard">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="logo">INK<span>SPIRED</span></div>
+          <span class="badge admin-badge">ADMIN</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#overview" class="nav-item active" data-section="overview">
+          <i class="ti ti-dashboard"></i>
+          <span>Overview</span>
+        </a>
+        <a href="#products" class="nav-item" data-section="products">
+          <i class="ti ti-package"></i>
+          <span>Products</span>
+        </a>
+        <a href="#orders" class="nav-item" data-section="orders">
+          <i class="ti ti-shopping-cart"></i>
+          <span>Orders</span>
+        </a>
+        <a href="#customers" class="nav-item" data-section="customers">
+          <i class="ti ti-users"></i>
+          <span>Customers</span>
+        </a>
+        <a href="#reviews" class="nav-item" data-section="reviews">
+          <i class="ti ti-star"></i>
+          <span>Reviews</span>
+        </a>
+        <a href="#reports" class="nav-item" data-section="reports">
+          <i class="ti ti-chart-bar"></i>
+          <span>Reports</span>
+        </a>
+        <a href="#settings" class="nav-item" data-section="settings">
+          <i class="ti ti-settings"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar">
+            <i class="ti ti-crown"></i>
+          </div>
+          <div class="user-details">
+            <span class="user-name">Administrator</span>
+            <span class="user-role">Owner</span>
+          </div>
+        </div>
+        <button id="adminLogoutBtn" class="logout-btn">
+          <i class="ti ti-logout"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="header-left">
+          <h1 id="pageTitle">Dashboard Overview</h1>
+          <p id="pageSubtitle">Welcome back, Administrator</p>
+        </div>
+        <div class="header-right">
+          <div class="header-notifications">
+            <button class="notification-btn">
+              <i class="ti ti-bell"></i>
+              <span class="notification-badge" id="notificationCount">0</span>
+            </button>
+          </div>
+          <div class="header-time">
+            <span id="currentTime"></span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard-content">
+
+        <!-- Overview Section -->
+        <section id="overview-section" class="dashboard-section active">
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="ti ti-currency-peso"></i>
+              </div>
+              <div class="metric-content">
+                <h3 id="totalRevenue">₱ 0</h3>
+                <p>Total Revenue</p>
+                <span class="metric-change positive">+12.5%</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="ti ti-shopping-cart"></i>
+              </div>
+              <div class="metric-content">
+                <h3 id="totalOrders">0</h3>
+                <p>Total Orders</p>
+                <span class="metric-change positive">+8.2%</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="ti ti-package"></i>
+              </div>
+              <div class="metric-content">
+                <h3 id="totalProducts">0</h3>
+                <p>Total Products</p>
+                <span class="metric-change neutral">0%</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="ti ti-users"></i>
+              </div>
+              <div class="metric-content">
+                <h3 id="totalCustomers">0</h3>
+                <p>Total Customers</p>
+                <span class="metric-change positive">+15.3%</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="ti ti-clock"></i>
+              </div>
+              <div class="metric-content">
+                <h3 id="pendingOrders">0</h3>
+                <p>Pending Orders</p>
+                <span class="metric-change negative">-2.1%</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="ti ti-truck"></i>
+              </div>
+              <div class="metric-content">
+                <h3 id="shippedToday">0</h3>
+                <p>Shipped Today</p>
+                <span class="metric-change positive">+5.7%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="charts-grid">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Revenue Trend</h3>
+                <select id="revenuePeriod">
+                  <option value="7">Last 7 days</option>
+                  <option value="30">Last 30 days</option>
+                  <option value="90">Last 3 months</option>
+                </select>
+              </div>
+              <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Top Products</h3>
+              </div>
+              <div class="top-products-list" id="topProductsList">
+                <!-- Top products will be populated here -->
+              </div>
+            </div>
+          </div>
+
+          <div class="recent-activity">
+            <div class="activity-header">
+              <h3>Recent Activity</h3>
+              <button class="view-all-btn">View All</button>
+            </div>
+            <div class="activity-list" id="recentActivity">
+              <!-- Recent activity will be populated here -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products-section" class="dashboard-section">
+          <div class="section-header">
+            <div>
+              <h2>Product Management</h2>
+              <p>Manage your product catalog and inventory</p>
+            </div>
+            <button class="btn-primary" id="addProductBtn">
+              <i class="ti ti-plus"></i>
+              Add Product
+            </button>
+          </div>
+
+          <div class="products-controls">
+            <div class="search-box">
+              <i class="ti ti-search"></i>
+              <input type="text" id="productSearch" placeholder="Search products...">
+            </div>
+            <div class="filter-controls">
+              <select id="productCategoryFilter">
+                <option value="all">All Categories</option>
+                <option value="Ballpen">Ballpoint</option>
+                <option value="Fountain">Fountain</option>
+                <option value="Gel">Gel</option>
+                <option value="Marker">Markers</option>
+              </select>
+              <select id="productStatusFilter">
+                <option value="all">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="outofstock">Out of Stock</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="products-table-container">
+            <table class="data-table" id="productsTable">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productsTableBody">
+                <!-- Products will be populated here -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Orders Section -->
+        <section id="orders-section" class="dashboard-section">
+          <div class="section-header">
+            <div>
+              <h2>Order Management</h2>
+              <p>Track and manage customer orders</p>
+            </div>
+          </div>
+
+          <div class="orders-controls">
+            <div class="search-box">
+              <i class="ti ti-search"></i>
+              <input type="text" id="orderSearch" placeholder="Search orders...">
+            </div>
+            <div class="filter-controls">
+              <select id="orderStatusFilter">
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <select id="orderDateFilter">
+                <option value="all">All Time</option>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="orders-table-container">
+            <table class="data-table" id="ordersTable">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <!-- Orders will be populated here -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Customers Section -->
+        <section id="customers-section" class="dashboard-section">
+          <div class="section-header">
+            <div>
+              <h2>Customer Management</h2>
+              <p>View and manage customer information</p>
+            </div>
+          </div>
+
+          <div class="customers-controls">
+            <div class="search-box">
+              <i class="ti ti-search"></i>
+              <input type="text" id="customerSearch" placeholder="Search customers...">
+            </div>
+          </div>
+
+          <div class="customers-table-container">
+            <table class="data-table" id="customersTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Total Orders</th>
+                  <th>Total Spent</th>
+                  <th>Last Order</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="customersTableBody">
+                <!-- Customers will be populated here -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="reviews-section" class="dashboard-section">
+          <div class="section-header">
+            <div>
+              <h2>Reviews & Feedback</h2>
+              <p>Manage customer reviews and ratings</p>
+            </div>
+          </div>
+
+          <div class="reviews-stats">
+            <div class="review-stat-card">
+              <h3 id="averageRating">0.0</h3>
+              <p>Average Rating</p>
+              <div class="rating-stars" id="averageRatingStars">
+                <!-- Stars will be populated here -->
+              </div>
+            </div>
+            <div class="review-stat-card">
+              <h3 id="totalReviews">0</h3>
+              <p>Total Reviews</p>
+            </div>
+            <div class="review-stat-card">
+              <h3 id="pendingReviews">0</h3>
+              <p>Pending Review</p>
+            </div>
+          </div>
+
+          <div class="reviews-table-container">
+            <table class="data-table" id="reviewsTable">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Customer</th>
+                  <th>Rating</th>
+                  <th>Review</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="reviewsTableBody">
+                <!-- Reviews will be populated here -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports-section" class="dashboard-section">
+          <div class="section-header">
+            <div>
+              <h2>Reports & Analytics</h2>
+              <p>Generate and export business reports</p>
+            </div>
+            <button class="btn-secondary" id="exportReportBtn">
+              <i class="ti ti-download"></i>
+              Export Report
+            </button>
+          </div>
+
+          <div class="reports-grid">
+            <div class="report-card">
+              <div class="report-header">
+                <h3>Sales Report</h3>
+                <select id="salesReportPeriod">
+                  <option value="today">Today</option>
+                  <option value="week">This Week</option>
+                  <option value="month">This Month</option>
+                  <option value="year">This Year</option>
+                </select>
+              </div>
+              <div class="report-content" id="salesReportContent">
+                <!-- Sales report will be populated here -->
+              </div>
+            </div>
+
+            <div class="report-card">
+              <div class="report-header">
+                <h3>Inventory Report</h3>
+              </div>
+              <div class="report-content" id="inventoryReportContent">
+                <!-- Inventory report will be populated here -->
+              </div>
+            </div>
+
+            <div class="report-card">
+              <div class="report-header">
+                <h3>Customer Report</h3>
+              </div>
+              <div class="report-content" id="customerReportContent">
+                <!-- Customer report will be populated here -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="dashboard-section">
+          <div class="section-header">
+            <h2>Settings</h2>
+            <p>Configure your store settings</p>
+          </div>
+
+          <div class="settings-grid">
+            <div class="settings-card">
+              <h3>Store Information</h3>
+              <form id="storeSettingsForm" class="settings-form">
+                <div class="form-group">
+                  <label for="storeName">Store Name</label>
+                  <input type="text" id="storeName" value="INKSPIRED Luxury">
+                </div>
+                <div class="form-group">
+                  <label for="storeEmail">Contact Email</label>
+                  <input type="email" id="storeEmail" value="hello@inkspired.com">
+                </div>
+                <div class="form-group">
+                  <label for="storePhone">Contact Phone</label>
+                  <input type="tel" id="storePhone" value="+63 917 123 4567">
+                </div>
+                <div class="form-group">
+                  <label for="storeAddress">Store Address</label>
+                  <textarea id="storeAddress" rows="3">123 Luxury Lane, Makati City, Philippines</textarea>
+                </div>
+                <button type="submit" class="btn-primary">Save Changes</button>
+              </form>
+            </div>
+
+            <div class="settings-card">
+              <h3>Shipping Settings</h3>
+              <form id="shippingSettingsForm" class="settings-form">
+                <div class="form-group">
+                  <label for="shippingFee">Standard Shipping Fee</label>
+                  <input type="number" id="shippingFee" value="0" min="0" step="0.01">
+                  <small>COD orders have free shipping</small>
+                </div>
+                <div class="form-group">
+                  <label for="freeShippingThreshold">Free Shipping Threshold</label>
+                  <input type="number" id="freeShippingThreshold" value="1000" min="0" step="0.01">
+                  <small>Orders above this amount get free shipping</small>
+                </div>
+                <div class="form-group">
+                  <label for="processingTime">Processing Time (days)</label>
+                  <input type="number" id="processingTime" value="1" min="1" max="7">
+                </div>
+                <button type="submit" class="btn-primary">Save Changes</button>
+              </form>
+            </div>
+
+            <div class="settings-card">
+              <h3>Admin Account</h3>
+              <form id="adminSettingsForm" class="settings-form">
+                <div class="form-group">
+                  <label for="adminEmail">Admin Email</label>
+                  <input type="email" id="adminEmail" value="admin@inkspired.com">
+                </div>
+                <div class="form-group">
+                  <label for="currentPassword">Current Password</label>
+                  <input type="password" id="currentPassword">
+                </div>
+                <div class="form-group">
+                  <label for="newPassword">New Password</label>
+                  <input type="password" id="newPassword">
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword">Confirm New Password</label>
+                  <input type="password" id="confirmPassword">
+                </div>
+                <button type="submit" class="btn-primary">Update Password</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <!-- Product Modal -->
+  <div id="productModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="productModalTitle">Add New Product</h3>
+        <button class="modal-close" onclick="closeProductModal()">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <form id="productForm" class="modal-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="productName">Product Name *</label>
+            <input type="text" id="productName" required>
+          </div>
+          <div class="form-group">
+            <label for="productCategory">Category *</label>
+            <select id="productCategory" required>
+              <option value="">Select Category</option>
+              <option value="Ballpen">Ballpoint</option>
+              <option value="Fountain">Fountain</option>
+              <option value="Gel">Gel</option>
+              <option value="Marker">Markers</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="productPrice">Price (₱) *</label>
+            <input type="number" id="productPrice" min="0" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="productStock">Stock Quantity</label>
+            <input type="number" id="productStock" min="0" value="10">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="productDescription">Description *</label>
+          <textarea id="productDescription" rows="4" required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="productImage">Image URL *</label>
+            <input type="url" id="productImage" required>
+          </div>
+          <div class="form-group">
+            <label for="productFeatured">Featured Product</label>
+            <input type="checkbox" id="productFeatured">
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeProductModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Order Details Modal -->
+  <div id="orderModal" class="modal-overlay">
+    <div class="modal-content large">
+      <div class="modal-header">
+        <h3>Order Details</h3>
+        <button class="modal-close" onclick="closeOrderModal()">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <div id="orderDetailsContent">
+        <!-- Order details will be populated here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Customer Details Modal -->
+  <div id="customerModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Customer Details</h3>
+        <button class="modal-close" onclick="closeCustomerModal()">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <div id="customerDetailsContent">
+        <!-- Customer details will be populated here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications Panel -->
+  <div id="notificationsPanel" class="notifications-panel">
+    <div class="notifications-header">
+      <h3>Notifications</h3>
+      <button onclick="closeNotifications()">
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+    <div id="notificationsList" class="notifications-list">
+      <!-- Notifications will be populated here -->
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="admin-dashboard.js"></script>
+</body>
+</html></content>
+<parameter name="filePath">C:\Users\wilven\Documents\Pen-for-You\admin-dashboard.html

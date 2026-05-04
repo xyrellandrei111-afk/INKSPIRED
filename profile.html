@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile | INKSPIRED Luxury</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_append.css">
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-canvas"></div>
+  <div class="grain-overlay"></div>
+  <div class="floating-orb" style="width: 384px; height: 384px; background: #FFC9DE; top: -10%; left: -5%;"></div>
+  <div class="floating-orb" style="width: 500px; height: 500px; background: #FFDFDF; bottom: -10%; right: -10%;"></div>
+  <div id="mouseGlow"></div>
+
+  <!-- Pill Navbar -->
+  <nav id="pill-nav">
+    <a href="index.html" class="nav-logo">
+      INK<span>SPIRED</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link-pill">Home</a>
+      <a href="index.html#featured" class="nav-link-pill">Featured</a>
+      <a href="products.html" class="nav-link-pill">Products</a>
+      <a href="index.html#shop" class="nav-link-pill">Shop</a>
+      <a href="index.html#craft" class="nav-link-pill">Craftsmanship</a>
+    </div>
+    <div class="nav-actions">
+      <a href="cart.html" class="nav-link-pill" style="display: flex; align-items: center; gap: 6px;" aria-label="Shopping bag">
+        <i class="ti ti-shopping-bag"></i>
+        <span id="cart-count">0</span>
+      </a>
+      <button type="button" onclick="openSearchModal()" aria-label="Search" title="Search">
+        <i class="ti ti-search"></i>
+      </button>
+      <a href="profile.html" class="nav-link-pill" aria-label="My Profile">
+        <i class="ti ti-user"></i>
+      </a>
+      <button type="button" onclick="toggleMobileMenu()" class="mobile-menu-toggle" aria-label="Menu" title="Menu">
+        <i class="ti ti-menu-2"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Profile Hero -->
+  <section class="products-hero">
+    <div class="container">
+      <h1 class="page-title">My Profile</h1>
+      <p class="page-subtitle">Manage your account and view your orders</p>
+    </div>
+  </section>
+
+  <!-- Profile Content -->
+  <section class="products-section" style="padding-top: 0;">
+    <div class="container" style="max-width: 800px;">
+      <div class="product-card" style="margin-top: -80px; position: relative; z-index: 10;">
+        <div class="card-body" style="padding: 40px;">
+          <!-- User Avatar & Info -->
+          <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 40px;">
+            <div style="
+              width: 80px; height: 80px; 
+              background: linear-gradient(135deg, #c25e7c, #FFC9DE);
+              border-radius: 50%;
+              display: flex; align-items: center; justify-content: center;
+              font-family: 'Space Grotesk', sans-serif;
+              font-size: 2rem; font-weight: 700; color: white;
+              box-shadow: 0 8px 32px rgba(194, 94, 124, 0.3);
+            " id="userAvatar">
+              JD
+            </div>
+            <div>
+              <h2 id="userName" style="font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; margin: 0 0 4px;">Juan dela Cruz</h2>
+              <p id="userEmail" style="color: #6b7280; margin: 0;">juan@example.com</p>
+            </div>
+          </div>
+
+          <!-- Profile Actions -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 40px;">
+            <a href="orders.html" class="btn-secondary" style="display: flex; align-items: center; gap: 12px; padding: 16px; justify-content: center;">
+              <i class="ti ti-package"></i> My Orders
+            </a>
+            <a href="#" class="btn-secondary" style="display: flex; align-items: center; gap: 12px; padding: 16px; justify-content: center;">
+              <i class="ti ti-heart"></i> Wishlist
+            </a>
+            <a href="#" class="btn-secondary" style="display: flex; align-items: center; gap: 12px; padding: 16px; justify-content: center;">
+              <i class="ti ti-map-pin"></i> Addresses
+            </a>
+            <a href="#" class="btn-secondary" style="display: flex; align-items: center; gap: 12px; padding: 16px; justify-content: center;">
+              <i class="ti ti-credit-card"></i> Payments
+            </a>
+          </div>
+
+          <!-- Account Actions -->
+          <div style="border-top: 1px solid rgba(194, 94, 124, 0.2); padding-top: 24px;">
+            <button onclick="signOut()" class="btn-ghost" style="display: flex; align-items: center; gap: 12px; color: #dc2626; padding: 12px 16px;">
+              <i class="ti ti-logout"></i> Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- Search Modal -->
+   <div id="searchOverlay" class="search-overlay" onclick="closeSearchModal()"></div>
+   <div id="searchModal" class="search-modal">
+     <div class="search-modal-header">
+       <div class="search-input-wrap">
+         <i class="ti ti-search"></i>
+         <input type="text" id="globalSearchInput" placeholder="Search premium pens..." oninput="handleSearch(this.value)">
+       </div>
+       <button onclick="closeSearchModal()" aria-label="Close"><i class="ti ti-x"></i></button>
+     </div>
+     <div id="searchResults" class="search-results"></div>
+   </div>
+
+   <!-- Mobile Menu -->
+  <div id="mobileMenuOverlay" class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+  <div id="mobileMenuPanel" class="mobile-menu-panel">
+    <div class="mobile-menu-header">
+      <span class="nav-logo">INK<span>SPIRED</span></span>
+      <button onclick="toggleMobileMenu()" aria-label="Close"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="mobile-menu-links">
+      <a href="index.html"><i class="ti ti-home"></i> Home</a>
+      <a href="index.html#featured"><i class="ti ti-star"></i> Featured</a>
+      <a href="products.html"><i class="ti ti-package"></i> Products</a>
+      <a href="index.html#shop"><i class="ti ti-shopping-bag"></i> Shop</a>
+      <a href="index.html#craft"><i class="ti ti-writing"></i> Craftsmanship</a>
+      <a href="cart.html"><i class="ti ti-cart"></i> Cart</a>
+      <a href="profile.html"><i class="ti ti-user"></i> My Profile</a>
+    </div>
+  </div>
+
+   <script src="script.js"></script>
+  <script>
+    // Get current user
+    function getUser() {
+      const user = localStorage.getItem('inkspired_user');
+      return user ? JSON.parse(user) : null;
+    }
+
+    // Update profile display
+    function updateProfileDisplay() {
+      const user = getUser();
+      const nameEl = document.getElementById('userName');
+      const emailEl = document.getElementById('userEmail');
+      const avatarEl = document.getElementById('userAvatar');
+
+      if (user) {
+        if (nameEl) nameEl.textContent = user.name || 'User';
+        if (emailEl) emailEl.textContent = user.email || '';
+        if (avatarEl) {
+          const initials = (user.name || 'U').split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+          avatarEl.textContent = initials;
+        }
+      }
+    }
+
+    // Sign out
+    function signOut() {
+      localStorage.removeItem('inkspired_user');
+      window.location.href = 'index.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProfileDisplay();
+      
+      // Cart count
+      const cart = JSON.parse(localStorage.getItem('inkspired_cart_v2') || '[]');
+      const count = cart.reduce((sum, item) => sum + (Number(item.qty) || 0), 0);
+      const countEl = document.getElementById('cart-count');
+      if (countEl) countEl.textContent = count;
+    });
+  </script>
+</body>
+</html>

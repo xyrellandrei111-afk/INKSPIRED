@@ -1,556 +1,835 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>INKSPIRED | Premium App Marketplace</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INKSPIRED | Premium Pen Luxury</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/tabler-icons.min.css">
+   <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="style_append.css">
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
-  <div id="loader" aria-hidden="true">
-    <div class="loader-inner">
-      <div class="loader-mark">
-        <span class="loader-orbit orbit-a"></span>
-        <span class="loader-orbit orbit-b"></span>
-        <div class="loader-logo">INK<span>SPIRED</span></div>
-      </div>
-      <p class="loader-copy">Curating premium creative tools for your next build.</p>
-      <div class="loader-bar">
-        <div class="loader-fill"></div>
-      </div>
-    </div>
-  </div>
-
-  <canvas id="bgCanvas"></canvas>
+  <!-- Animated Background -->
+  <div class="bg-canvas"></div>
+  <div class="grain-overlay"></div>
+  <div class="floating-orb" style="width: 384px; height: 384px; background: #FFC9DE; top: -10%; left: -5%;"></div>
+  <div class="floating-orb" style="width: 500px; height: 500px; background: #FFDFDF; bottom: -10%; right: -10%;"></div>
   <div id="mouseGlow"></div>
-  <div id="toast" role="status" aria-live="polite"></div>
 
-  <nav id="navbar">
-    <a class="nav-logo" href="#hero">INK<span>SPIRED</span></a>
-    <div class="nav-links">
-      <a href="#hero">Home</a>
-      <a href="#featured">Featured</a>
-      <a href="#collections">Collections</a>
-      <a href="#browse">Marketplace</a>
-      <a href="#creators">Creators</a>
-      <a href="#library" id="navLibrary" class="hidden">My Library</a>
+  <!-- Pill Navbar -->
+  <nav id="pill-nav">
+    <a href="index.html" class="nav-logo">
+      INK<span>SPIRED</span>
+    </a>
+ <div class="nav-links">
+      <a href="index.html" class="nav-link-pill">Home</a>
+      <a href="#featured" class="nav-link-pill">Featured</a>
+      <a href="products.html" class="nav-link-pill">Products</a>
+      <a href="#shop" class="nav-link-pill">Shop</a>
+      <a href="#craft" class="nav-link-pill">Craftsmanship</a>
     </div>
-    <div class="nav-actions">
-      <div class="nav-search-wrap">
-        <input type="text" id="navSearch" class="nav-search" placeholder="Search apps, tags, creators..." oninput="handleSearch(this.value)" />
-        <i class="fa-solid fa-magnifying-glass nav-search-icon"></i>
-      </div>
-      <button class="status-pill" id="dataStatusBadge" type="button">
-        <i class="fa-solid fa-signal"></i>
-        <span>Loading</span>
-      </button>
-      <button class="cart-btn" type="button" onclick="toggleCart()" aria-label="Open cart">
-        <i class="fa-solid fa-bag-shopping"></i>
-        <span id="cart-count">0</span>
-      </button>
-      <div id="navAuthArea">
-        <button class="auth-btn" type="button" onclick="openAuthModal('login')">
-          <i class="fa-solid fa-user"></i> Sign In
+     <div class="nav-actions">
+       <a href="cart.html" class="nav-link-pill" style="display: flex; align-items: center; gap: 6px;" aria-label="Shopping bag">
+         <i class="ti ti-shopping-bag"></i>
+         <span id="cart-count">0</span>
+       </a>
+        <button type="button" onclick="openSearchModal()" aria-label="Search" title="Search">
+          <i class="ti ti-search"></i>
         </button>
+        <a href="signin.html" class="nav-link-pill" aria-label="Sign in">
+          <i class="ti ti-user"></i>
+        </a>
+        <button type="button" onclick="toggleMobileMenu()" class="mobile-menu-toggle" aria-label="Menu" title="Menu">
+         <i class="ti ti-menu-2"></i>
+       </button>
+     </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay & Panel -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    <div id="mobileMenuPanel" class="mobile-menu-panel">
+      <div class="mobile-menu-header">
+        <span class="nav-logo">INK<span>SPIRED</span></span>
+        <button onclick="toggleMobileMenu()" aria-label="Close"><i class="ti ti-x"></i></button>
       </div>
-      <button class="hamburger" id="hamburger" type="button" onclick="toggleMobileMenu()" aria-label="Open menu">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-    </div>
-  </nav>
-
-  <aside id="mobileMenu" class="mobile-menu" aria-hidden="true">
-    <button class="mobile-menu-close" type="button" onclick="toggleMobileMenu(false)" aria-label="Close menu">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-    <a href="#hero" onclick="toggleMobileMenu(false)">Home</a>
-    <a href="#featured" onclick="toggleMobileMenu(false)">Featured</a>
-    <a href="#collections" onclick="toggleMobileMenu(false)">Collections</a>
-    <a href="#browse" onclick="toggleMobileMenu(false)">Marketplace</a>
-    <a href="#creators" onclick="toggleMobileMenu(false)">Creators</a>
-    <button class="btn-primary mobile-auth-cta" type="button" onclick="openAuthModal('login'); toggleMobileMenu(false)">
-      <i class="fa-solid fa-user"></i> Sign In
-    </button>
-  </aside>
-
-  <main>
-    <section id="hero">
-      <div class="hero-copy">
-        <div class="hero-eyebrow">
-          <span class="hero-badge"><i class="fa-solid fa-gem"></i> Curated Premium Marketplace</span>
-          <span class="hero-mode" id="heroModeNote">Booting experience...</span>
-        </div>
-        <h1 class="hero-title">Apps that feel<br /><span class="gradient-text">crafted, not cloned.</span></h1>
-        <p class="hero-sub">
-          Discover polished tools for design, writing, dev workflows, and digital business. INKSPIRED blends curated software, creator-first storefronts, and a resilient experience that stays beautiful even when the backend blinks.
-        </p>
-        <div class="hero-btns">
-          <button class="btn-primary" type="button" onclick="document.getElementById('browse').scrollIntoView({ behavior: 'smooth' })">
-            <i class="fa-solid fa-compass"></i> Explore Marketplace
-          </button>
-          <button class="btn-ghost" type="button" onclick="openAuthModal('register')">
-            <i class="fa-solid fa-sparkles"></i> Join as Creator
-          </button>
-        </div>
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <strong class="counter" data-target="12400">0</strong>
-            <span>Curated Listings</span>
-          </div>
-          <div class="hero-stat">
-            <strong class="counter" data-target="84000">0</strong>
-            <span>Creative Buyers</span>
-          </div>
-          <div class="hero-stat">
-            <strong class="counter" data-target="3200">0</strong>
-            <span>Indie Developers</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-stage">
-        <div class="hero-showcase glass-card">
-          <div class="showcase-top">
-            <div class="showcase-brand">
-              <div class="showcase-icon"><i class="fa-solid fa-pen-ruler"></i></div>
-              <div>
-                <div class="showcase-name">InkFlow Pro</div>
-                <div class="showcase-meta">Design System Painter</div>
-              </div>
-            </div>
-            <div class="showcase-price">₱850</div>
-          </div>
-          <div class="showcase-screen">
-            <div class="showcase-gradient"></div>
-            <div class="showcase-panel panel-main">
-              <div class="panel-line long"></div>
-              <div class="panel-line mid"></div>
-              <div class="panel-grid">
-                <span></span><span></span><span></span><span></span>
-              </div>
-            </div>
-            <div class="showcase-panel panel-float">
-              <div class="panel-chip">AI Brushes</div>
-              <div class="panel-chip">Live Layers</div>
-              <div class="panel-chip">Export Packs</div>
-            </div>
-          </div>
-          <div class="showcase-bottom">
-            <div class="showcase-rating">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star-half-stroke"></i>
-              <span>4.8 rating</span>
-            </div>
-            <button class="showcase-cta" type="button" onclick="document.getElementById('featured').scrollIntoView({ behavior: 'smooth' })">See Top Picks</button>
-          </div>
-        </div>
-
-        <div class="hero-flyout flyout-a">
-          <i class="fa-solid fa-bolt"></i>
-          <div>
-            <strong>3s Fail-safe</strong>
-            <span>Never stuck on loading</span>
-          </div>
-        </div>
-        <div class="hero-flyout flyout-b">
-          <i class="fa-solid fa-heart"></i>
-          <div>
-            <strong>Wishlist + Library</strong>
-            <span>Synced to local fallback</span>
-          </div>
-        </div>
-        <div class="hero-glow glow-a"></div>
-        <div class="hero-glow glow-b"></div>
-      </div>
-    </section>
-
-    <section id="pulse" class="pulse-section">
-      <div class="section-header compact">
-        <p class="section-eyebrow"><i class="fa-solid fa-wave-square"></i> Marketplace Pulse</p>
-        <h2 class="section-title">What’s happening <span class="gradient-text">right now</span></h2>
-      </div>
-      <div class="pulse-grid">
-        <article class="pulse-card glass-card">
-          <div class="pulse-icon coral"><i class="fa-solid fa-fire"></i></div>
-          <div>
-            <h3>Trending this hour</h3>
-            <p id="trendingHeadline">Loading hot apps...</p>
-          </div>
-        </article>
-        <article class="pulse-card glass-card">
-          <div class="pulse-icon mint"><i class="fa-solid fa-layer-group"></i></div>
-          <div>
-            <h3>Mode status</h3>
-            <p id="storeModeText">Preparing data source...</p>
-          </div>
-        </article>
-        <article class="pulse-card glass-card">
-          <div class="pulse-icon gold"><i class="fa-solid fa-clock-rotate-left"></i></div>
-          <div>
-            <h3>Recent searches</h3>
-            <div id="recentSearches" class="search-chip-row"></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="featured">
-      <div class="section-header">
-        <p class="section-eyebrow"><i class="fa-solid fa-crown"></i> Editor Highlights</p>
-        <h2 class="section-title">Featured <span class="gradient-text">Releases</span></h2>
-        <p class="section-sub">Curated releases with standout craft, presentation, and creator support.</p>
-      </div>
-      <div class="carousel-shell">
-        <button class="carousel-btn prev" type="button" onclick="scrollCarousel(-1)" aria-label="Previous featured apps">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <div id="featuredCarousel" class="featured-carousel">
-          <div class="carousel-loading"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading featured apps...</div>
-        </div>
-        <button class="carousel-btn next" type="button" onclick="scrollCarousel(1)" aria-label="Next featured apps">
-          <i class="fa-solid fa-chevron-right"></i>
-        </button>
-      </div>
-    </section>
-
-    <section id="collections">
-      <div class="section-header">
-        <p class="section-eyebrow"><i class="fa-solid fa-stars"></i> Smart Discovery</p>
-        <h2 class="section-title">Collections with <span class="gradient-text">actual taste</span></h2>
-        <p class="section-sub">Browse dynamic sets pulled from your activity, marketplace momentum, and fresh releases.</p>
-      </div>
-
-      <div class="collection-grid">
-        <article class="collection-card collection-card-large glass-card">
-          <div class="collection-head">
-            <div>
-              <span class="collection-label">For You</span>
-              <h3>Best match for your current filters</h3>
-            </div>
-            <span class="collection-tag">Adaptive</span>
-          </div>
-          <div id="forYouGrid" class="mini-app-grid"></div>
-        </article>
-
-        <article class="collection-card glass-card">
-          <div class="collection-head">
-            <div>
-              <span class="collection-label">Trending</span>
-              <h3>Momentum board</h3>
-            </div>
-            <span class="collection-tag">Downloads</span>
-          </div>
-          <div id="trendingScroll" class="mini-rail">
-            <div class="scroll-loading"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
-          </div>
-        </article>
-
-        <article class="collection-card glass-card">
-          <div class="collection-head">
-            <div>
-              <span class="collection-label">Recently Viewed</span>
-              <h3>Your revisit lane</h3>
-            </div>
-            <span class="collection-tag">Local</span>
-          </div>
-          <div id="recentlyViewedRail" class="mini-rail empty-state-inline">
-            <p>Open an app and it will appear here.</p>
-          </div>
-        </article>
-
-        <article class="collection-card glass-card">
-          <div class="collection-head">
-            <div>
-              <span class="collection-label">Just Released</span>
-              <h3>Fresh drops</h3>
-            </div>
-            <span class="collection-tag">Newest</span>
-          </div>
-          <div id="newReleasesScroll" class="mini-rail">
-            <div class="scroll-loading"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="browse">
-      <div class="section-header">
-        <p class="section-eyebrow"><i class="fa-solid fa-grid-2"></i> Full Marketplace</p>
-        <h2 class="section-title">Browse all <span class="gradient-text">premium apps</span></h2>
-        <p class="section-sub">Filter by category, sort by momentum, and build a cart that survives downtime gracefully.</p>
-      </div>
-
-      <div class="browse-shell glass-card">
-        <div class="browse-toolbar">
-          <div class="toolbar-left">
-            <div class="category-tabs" id="categoryTabs">
-              <button class="tab active" data-cat="All" type="button">All</button>
-              <button class="tab" data-cat="Design" type="button">Design</button>
-              <button class="tab" data-cat="Productivity" type="button">Productivity</button>
-              <button class="tab" data-cat="Writing" type="button">Writing</button>
-              <button class="tab" data-cat="Marketing" type="button">Marketing</button>
-              <button class="tab" data-cat="Developer" type="button">Developer</button>
-              <button class="tab" data-cat="Finance" type="button">Finance</button>
-            </div>
-            <div id="activeFilterSummary" class="filter-summary">Showing all premium releases.</div>
-          </div>
-
-          <div class="toolbar-right">
-            <div class="sort-wrap">
-              <label for="sortSelect">Sort</label>
-              <select id="sortSelect" class="sort-select" onchange="handleSort(this.value)">
-                <option value="newest">Newest First</option>
-                <option value="popular">Most Popular</option>
-                <option value="rating">Top Rated</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="free">Free Only</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div id="appGrid" class="app-grid">
-          <div class="products-loading"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading apps...</div>
-        </div>
-
-        <div id="loadMoreWrap" class="load-more-wrap" style="display:none">
-          <button id="loadMoreBtn" class="btn-ghost" type="button" onclick="loadMoreApps()">
-            <i class="fa-solid fa-plus"></i> Load More
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section id="creators">
-      <div class="section-header">
-        <p class="section-eyebrow"><i class="fa-solid fa-code"></i> Creator Spotlight</p>
-        <h2 class="section-title">Built by <span class="gradient-text">serious makers</span></h2>
-        <p class="section-sub">A storefront for indie software teams who care about product detail, not just shipping volume.</p>
-      </div>
-
-      <div class="creator-layout">
-        <article class="creator-feature glass-card">
-          <div class="creator-copy">
-            <span class="collection-label">Launch on INKSPIRED</span>
-            <h3>Sell polished software with a premium presentation.</h3>
-            <p>
-              Upload your app, show off features with rich visuals, and keep your storefront elegant even when the network is unreliable. The platform supports live data plus graceful local fallback for browsing continuity.
-            </p>
-            <div class="hero-btns creator-actions">
-              <a href="developer.html" class="btn-primary"><i class="fa-solid fa-rocket"></i> Open Developer Portal</a>
-              <button class="btn-ghost" type="button" onclick="openAuthModal('register')"><i class="fa-solid fa-user-plus"></i> Create Account</button>
-            </div>
-          </div>
-          <div id="creatorSpotlight" class="creator-stack"></div>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer id="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-logo">INK<span>SPIRED</span></div>
-        <p class="footer-tagline">A curated app marketplace for designers, writers, developers, and creative operators.</p>
-      </div>
-      <div class="footer-links">
-        <a href="#featured">Featured</a>
-        <a href="#collections">Collections</a>
-        <a href="#browse">Marketplace</a>
-        <a href="#" id="footerLibraryLink">My Library</a>
-        <a href="developer.html">Developer Portal</a>
-        <a href="admin.html">Admin</a>
-      </div>
-      <div class="footer-note">
-        <span id="footerModeNote">Preparing storefront mode...</span>
-        <span>Built for resilient browsing.</span>
+      <div class="mobile-menu-links">
+        <a href="index.html"><i class="ti ti-home"></i> Home</a>
+        <a href="index.html#featured"><i class="ti ti-star"></i> Featured</a>
+        <a href="products.html"><i class="ti ti-package"></i> Products</a>
+        <a href="index.html#shop"><i class="ti ti-shopping-bag"></i> Shop</a>
+        <a href="index.html#craft"><i class="ti ti-writing"></i> Craftsmanship</a>
+        <a href="cart.html"><i class="ti ti-cart"></i> Cart</a>
+        <a href="contact.html"><i class="ti ti-message"></i> Contact</a>
       </div>
     </div>
-  </footer>
 
-  <div id="cartOverlay" class="cart-overlay" onclick="toggleCart(false)"></div>
-  <aside id="cartSidebar" class="cart-sidebar" aria-hidden="true">
-    <div class="cart-header">
-      <h2><i class="fa-solid fa-bag-shopping"></i> Your Cart</h2>
-      <button type="button" onclick="toggleCart(false)" aria-label="Close cart">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+    <!-- Hero Section -->
+  <section class="hero-section">
+    <img src="https://images.unsplash.com/photo-1513666639414-f795d25747a8?auto=format&w=600&q=80&fit=crop" alt="Premium Pen" class="parallax-img">
+    <img src="https://images.unsplash.com/photo-1515709969750-23a5a6b47a5e?auto=format&w=600&q=80&fit=crop" alt="Premium Pen Detail" class="parallax-img">
+
+    <div id="frosted-panel">
+      <div class="hero-badge">
+        <i class="ti ti-sparkles"></i>
+        EST. 2026 LUXURY COLLECTION
+      </div>
+      <h1>
+        Crafted for<br>
+        <span class="highlight">exceptional writing</span>
+      </h1>
+      <p>Elevate your correspondence with the world's finest hand-finished writing instruments, designed for those who appreciate the art of handwriting.</p>
+      <div class="hero-btns">
+        <a href="#shop" class="btn-primary">Explore Store</a>
+        <a href="#" class="btn-secondary">View Lookbook <i class="ti ti-arrow-right"></i></a>
+      </div>
     </div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="cart-footer">
-      <div class="coupon-row">
-        <input type="text" id="couponInput" class="form-input" placeholder="Coupon code" />
-        <button class="btn-ghost" type="button" onclick="applyCoupon()">Apply</button>
-      </div>
-      <div class="cart-total-row">
-        <span>Subtotal</span>
-        <strong id="cartTotal">₱ 0.00</strong>
-      </div>
-      <div id="discountRow" class="cart-discount-row" style="display:none">
-        <span>Discount</span>
-        <strong id="discountAmount">-₱ 0.00</strong>
-      </div>
-      <button class="btn-primary w-full" type="button" onclick="openCheckout()">
-        <i class="fa-solid fa-lock"></i> Secure Checkout
-      </button>
-    </div>
-  </aside>
+  </section>
 
-  <div id="appModal" class="modal-overlay">
-    <div class="modal-box app-modal-box">
-      <button class="modal-close" type="button" onclick="closeAppModal()" aria-label="Close app details">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <div id="appModalContent"></div>
-    </div>
-  </div>
+   <!-- Featured Collection -->
+   <section id="featured">
+     <div class="section-header">
+       <h2>Curated Favorites</h2>
+       <p>Signature pieces that define the Inkspired legacy of precision and elegance.</p>
+     </div>
 
-  <div id="authModal" class="modal-overlay">
-    <div class="modal-box auth-box">
-      <button class="modal-close" type="button" onclick="closeAuthModal()" aria-label="Close auth modal">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <div class="auth-tabs">
-        <button class="auth-tab active" id="loginTab" type="button" onclick="switchAuthTab('login')">Sign In</button>
-        <button class="auth-tab" id="registerTab" type="button" onclick="switchAuthTab('register')">Create Account</button>
-      </div>
+     <div class="featured-slider-container">
+       <div class="featured-slider-track" id="featuredSlider">
+         <div class="featured-card">
+           <img src="https://images.unsplash.com/photo-1541693560393-26ac180b567b?auto=format&w=800&q=80&fit=crop" alt="Rose Marble Pen">
+           <h3>Rose Marble</h3>
+           <p>Signature Ballpoint</p>
+           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+             <span class="featured-price">₱ 1,850</span>
+             <button class="featured-add" onclick="addToCart('rose-marble', 'Rose Marble', 1850)">
+               <i class="ti ti-plus"></i>
+             </button>
+           </div>
+         </div>
 
-      <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
-        <div class="auth-logo">INK<span>SPIRED</span></div>
-        <p class="auth-sub">Welcome back to the premium marketplace.</p>
-        <div class="form-group">
-          <label for="loginEmail">Email</label>
-          <input type="email" id="loginEmail" class="form-input" placeholder="you@example.com" required />
+         <div class="featured-card">
+           <div class="featured-badge">
+             <div class="pulse"></div>
+             BEST SELLER
+           </div>
+           <img src="https://images.unsplash.com/photo-1513542992587-cd39ba97057c?auto=format&w=800&q=80&fit=crop" alt="The Sovereign Pen">
+           <h3>The Sovereign</h3>
+           <p>18k Gold Nib Fountain Pen</p>
+           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+             <span class="featured-price">₱ 2,450</span>
+             <button class="featured-add" onclick="addToCart('sovereign', 'The Sovereign', 2450)">
+               <i class="ti ti-plus"></i>
+             </button>
+           </div>
+         </div>
+
+         <div class="featured-card">
+           <img src="https://images.unsplash.com/photo-1547516508-9534317dc5c5?auto=format&w=800&q=80&fit=crop" alt="Midnight Matte Pen">
+           <h3>Midnight Matte</h3>
+           <p>Executive Rollerball</p>
+           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+             <span class="featured-price">₱ 1,650</span>
+             <button class="featured-add" onclick="addToCart('midnight-matte', 'Midnight Matte', 1650)">
+               <i class="ti ti-plus"></i>
+             </button>
+           </div>
+         </div>
+       </div>
+
+       <!-- Slider Navigation -->
+       <button class="slider-btn slider-prev" aria-label="Previous slide">
+         <i class="ti ti-chevron-left"></i>
+       </button>
+       <button class="slider-btn slider-next" aria-label="Next slide">
+         <i class="ti ti-chevron-right"></i>
+       </button>
+
+       <!-- Slider Dots -->
+       <div class="slider-dots">
+         <button class="dot active" data-index="0" aria-label="Go to slide 1"></button>
+         <button class="dot" data-index="1" aria-label="Go to slide 2"></button>
+         <button class="dot" data-index="2" aria-label="Go to slide 3"></button>
+       </div>
+     </div>
+   </section>
+
+  <!-- Shop Section -->
+  <section id="shop">
+    <div class="container-fluid">
+      <div class="shop-header">
+        <div class="shop-title">
+          <h2>Our Products</h2>
         </div>
-        <div class="form-group">
-          <label for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required />
-        </div>
-        <button id="loginBtn" class="btn-primary w-full" type="submit">
-          <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
-        </button>
-        <p class="auth-switch">New here? <a onclick="switchAuthTab('register')">Create an account</a></p>
-      </form>
-
-      <form id="registerForm" class="auth-form hidden" style="display:none" onsubmit="handleRegister(event)">
-        <div class="auth-logo">INK<span>SPIRED</span></div>
-        <p class="auth-sub">Join as a collector or a creator.</p>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="regName">Full Name</label>
-            <input type="text" id="regName" class="form-input" placeholder="Your Name" required />
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+          <div class="category-tabs">
+            <button class="tab active" data-cat="All">All Instruments</button>
+            <button class="tab" data-cat="Ballpen">Ballpoint</button>
+            <button class="tab" data-cat="Fountain">Fountain</button>
+            <button class="tab" data-cat="Gel">Gel Ink</button>
+            <button class="tab" data-cat="Marker">Markers</button>
           </div>
-          <div class="form-group">
-            <label for="regEmail">Email</label>
-            <input type="email" id="regEmail" class="form-input" placeholder="you@example.com" required />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="regPassword">Password</label>
-          <input type="password" id="regPassword" class="form-input" placeholder="Minimum 6 characters" required />
-        </div>
-        <div class="form-group">
-          <label for="regRole">I am a...</label>
-          <select id="regRole" class="form-input">
-            <option value="customer">Customer / Buyer</option>
-            <option value="developer">Developer / Seller</option>
-          </select>
-        </div>
-        <button id="registerBtn" class="btn-primary w-full" type="submit">
-          <i class="fa-solid fa-user-plus"></i> Create Account
-        </button>
-        <p class="auth-switch">Already have an account? <a onclick="switchAuthTab('login')">Sign in</a></p>
-      </form>
-    </div>
-  </div>
-
-  <div id="checkoutModal" class="modal-overlay">
-    <div class="modal-box checkout-box">
-      <button class="modal-close" type="button" onclick="closeCheckout()" aria-label="Close checkout">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <h2 class="modal-title"><i class="fa-solid fa-lock"></i> Secure Checkout</h2>
-      <form id="orderForm" onsubmit="submitOrder(event)">
-        <div class="checkout-steps">
-          <div class="checkout-step active">
-            <h3 class="step-title">Your Details</h3>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="custName">Full Name</label>
-                <input type="text" id="custName" class="form-input" placeholder="Juan dela Cruz" required />
-              </div>
-              <div class="form-group">
-                <label for="custEmail">Email</label>
-                <input type="email" id="custEmail" class="form-input" placeholder="juan@email.com" required />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="custPhone">Phone</label>
-                <input type="tel" id="custPhone" class="form-input" placeholder="+63 9XX XXX XXXX" required />
-              </div>
-              <div class="form-group">
-                <label for="custAddress">Address</label>
-                <input type="text" id="custAddress" class="form-input" placeholder="Street, City, Province" required />
-              </div>
-            </div>
-          </div>
-
-          <div class="checkout-step active">
-            <h3 class="step-title">Order Summary</h3>
-            <div class="order-summary-box">
-              <div id="orderSummaryItems"></div>
-              <div class="order-total-row">
-                <span>Total</span>
-                <strong id="finalTotal">₱ 0.00</strong>
-              </div>
-            </div>
-            <div class="payment-method">
-              <div class="pm-option active">
-                <i class="fa-solid fa-money-bill-wave"></i> Cash on Delivery
-              </div>
-            </div>
+          <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search instruments...">
+            <i class="ti ti-search"></i>
           </div>
         </div>
-        <button id="checkoutBtn" class="btn-primary w-full" type="submit">
-          <i class="fa-solid fa-check-circle"></i> Confirm Order
-        </button>
-      </form>
-    </div>
-  </div>
+      </div>
 
-  <div id="successModal" class="modal-overlay">
-    <div class="modal-box success-box">
-      <div class="success-anim"><i class="fa-solid fa-circle-check"></i></div>
-      <h2>Order Confirmed</h2>
-      <p>Your checkout completed successfully. If the backend is offline, your order is still stored locally for a smooth library experience.</p>
-      <div id="successOrderId" class="success-order-id"></div>
-      <button class="btn-primary" type="button" onclick="closeSuccess()">Continue Shopping</button>
+      <div id="appGrid">
+        <!-- Product cards populated by script.js -->
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div id="libraryModal" class="modal-overlay">
-    <div class="modal-box library-box">
-      <button class="modal-close" type="button" onclick="closeLibrary()" aria-label="Close library">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <h2 class="modal-title"><i class="fa-solid fa-book-open"></i> My Library</h2>
-      <div id="libraryContent" class="library-grid"></div>
+  <!-- Craftsmanship Section -->
+  <section id="craft">
+    <div class="craft-grid">
+      <div class="craft-content">
+        <span class="craft-eyebrow">The Art of the Pen</span>
+        <h2>Masterfully crafted for your <span class="italic">finest thoughts.</span></h2>
+        <p>Every Inkspired instrument undergoes a rigorous 48-hour finishing process. From the hand-polished nibs to the balanced resin bodies, we ensure each pen is a masterpiece of ergonomics and aesthetics.</p>
+        <div class="craft-stats">
+          <div class="stat">
+            <h4>100%</h4>
+            <p>Hand Finished</p>
+          </div>
+          <div class="stat">
+            <h4>24k</h4>
+            <p>Gold Plated Nibs</p>
+          </div>
+        </div>
+        <a href="#">Learn about our process <i class="ti ti-arrow-up-right"></i></a>
+      </div>
+
+      <div class="craft-media">
+        <video src="https://videos.pexels.com/video-files/3826729/3826729-uhd_4096_2160_25fps.mp4" poster="https://images.pexels.com/videos/3826729/pexels-photo-3826729.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="craft-overlay"></div>
+        <div class="craft-caption">
+          <p>Watch Process</p>
+          <h3>NIB POLISHING</h3>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="supabase-config.js"></script>
+  <!-- Newsletter Section -->
+  <section id="newsletter">
+    <div class="newsletter-card">
+      <div class="newsletter-content">
+        <span class="newsletter-eyebrow">Maison Circle</span>
+        <h2>Join the <br><span class="italic">Connoisseurs</span></h2>
+        <p>Get exclusive access to limited edition drops, artisanal workshop stories, and member-only events.</p>
+        <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+          <input type="email" placeholder="Your boutique email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div class="newsletter-image">
+        <div class="image-frame"></div>
+        <img src="https://images.unsplash.com/photo-1543779848-da02f76efe5e?auto=format&w=800&q=80&fit=crop" alt="Premium Paper and Pen">
+      </div>
+      </div>
+    </div>
+   </section>
+
+   <footer>
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">INK<span>SPIRED</span></div>
+          <p>Crafting moments of inspiration since 2026. Every pen tells a story. What will yours be?</p>
+          <div class="footer-socials">
+            <a href="#" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="ti ti-brand-facebook"></i></a>
+            <a href="#" aria-label="Messenger"><i class="ti ti-brand-messenger"></i></a>
+            <a href="admin.html" aria-label="Admin"><i class="ti ti-lock"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Instruments</h4>
+          <ul>
+            <li><a href="products.html">Fountain Pens</a></li>
+            <li><a href="products.html">Ballpoint Pens</a></li>
+            <li><a href="products.html">Gel Ink Series</a></li>
+            <li><a href="products.html">Special Editions</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Maison</h4>
+          <ul>
+            <li><a href="#craft">Our Process</a></li>
+            <li><a href="#">The Heritage</a></li>
+            <li><a href="#">Bespoke Services</a></li>
+            <li><a href="#">Care Guide</a></li>
+          </ul>
+        </div>
+
+          <div class="footer-column">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="signin.html">Sign In</a></li>
+              <li><a href="signin.html">Create Account</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="feedback.html">Feedback</a></li>
+            </ul>
+          </div>
+
+        <div class="footer-status">
+          <p>Status</p>
+          <div class="status-indicator">
+            <div class="pulse"></div>
+            <span>Boutique Open</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 INKSPIRED Luxury. All rights reserved.</p>
+        <div>
+          <a href="#">Privacy</a> &nbsp;&nbsp;
+          <a href="#">Terms</a> &nbsp;&nbsp;
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script src="script.js"></script>
+  <script>
+    // ──────────────────────────────────────────
+    // GSAP ANIMATIONS
+    // ──────────────────────────────────────────
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Mouse follow
+    const glow = document.getElementById('mouseGlow');
+    document.addEventListener('mousemove', (e) => {
+      gsap.to(glow, {
+        duration: 0.8,
+        left: e.clientX,
+        top: e.clientY,
+        ease: 'power3.out'
+      });
+    });
+
+    // Hero parallax
+    gsap.utils.toArray('.parallax-img').forEach(img => {
+      const speed = img.getAttribute('data-speed') || -0.05;
+      gsap.to(img, {
+        y: -window.innerHeight * speed,
+        scrollTrigger: {
+          trigger: img,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
+        }
+      });
+    });
+
+     // Hero panel reveal
+     gsap.from('#frosted-panel', {
+       duration: 1.5,
+       y: 100,
+       opacity: 0,
+       scale: 0.9,
+       ease: 'expo.out',
+       delay: 0.2
+     });
+
+     // Featured cards slider + 3D tilt hover effect
+     const featuredCards = document.querySelectorAll('.featured-card');
+     const sliderTrack = document.getElementById('featuredSlider');
+     const prevBtn = document.querySelector('.slider-prev');
+     const nextBtn = document.querySelector('.slider-next');
+     const dots = document.querySelectorAll('.dot');
+
+     let currentIndex = 0;
+     const totalSlides = featuredCards.length;
+     let autoPlayInterval;
+
+     // Get card dimensions and gaps
+     function getCardDimensions() {
+       if (!featuredCards[0]) return { width: 0, gap: 40 };
+       const card = featuredCards[0];
+       const style = window.getComputedStyle(sliderTrack);
+       const gap = parseFloat(style.gap) || 40;
+       return {
+         width: card.offsetWidth,
+         gap: gap
+       };
+     }
+
+     // Update slider position - center the card
+     function updateSlider(index, animate = true) {
+       if (!sliderTrack || !featuredCards[index]) return;
+       currentIndex = index;
+
+       const { width: cardWidth, gap } = getCardDimensions();
+       const trackWidth = sliderTrack.clientWidth;
+       const scrollPosition = index * (cardWidth + gap);
+
+       if (animate) {
+         sliderTrack.scrollTo({
+           left: scrollPosition,
+           behavior: 'smooth'
+         });
+       } else {
+         sliderTrack.scrollLeft = scrollPosition;
+       }
+
+       // Update dots
+       dots.forEach((dot, i) => {
+         dot.classList.toggle('active', i === index);
+       });
+     }
+
+     // Navigation buttons
+     prevBtn?.addEventListener('click', () => {
+       const newIndex = currentIndex > 0 ? currentIndex - 1 : totalSlides - 1;
+       updateSlider(newIndex);
+       resetAutoPlay();
+     });
+
+     nextBtn?.addEventListener('click', () => {
+       const newIndex = currentIndex < totalSlides - 1 ? currentIndex + 1 : 0;
+       updateSlider(newIndex);
+       resetAutoPlay();
+     });
+
+     // Dot navigation
+     dots.forEach(dot => {
+       dot.addEventListener('click', () => {
+         updateSlider(parseInt(dot.dataset.index));
+         resetAutoPlay();
+       });
+     });
+
+     // Auto-play
+     function startAutoPlay() {
+       autoPlayInterval = setInterval(() => {
+         const nextIndex = currentIndex < totalSlides - 1 ? currentIndex + 1 : 0;
+         updateSlider(nextIndex);
+       }, 5000);
+     }
+
+     function resetAutoPlay() {
+       clearInterval(autoPlayInterval);
+       startAutoPlay();
+     }
+
+     // Detect current slide based on scroll position
+     sliderTrack?.addEventListener('scroll', () => {
+       const { width: cardWidth, gap } = getCardDimensions();
+       const trackWidth = sliderTrack.clientWidth;
+       const centerOffset = (trackWidth - cardWidth) / 2;
+       const currentScroll = sliderTrack.scrollLeft;
+       
+       // Calculate which slide is closest to center
+       const estimatedIndex = Math.round((currentScroll + centerOffset) / (cardWidth + gap));
+       const index = Math.max(0, Math.min(estimatedIndex, totalSlides - 1));
+
+       if (index !== currentIndex) {
+         currentIndex = index;
+         dots.forEach((dot, i) => {
+           dot.classList.toggle('active', i === index);
+         });
+       }
+     }, { passive: true });
+
+     // 3D Tilt effect on cards
+     featuredCards.forEach(card => {
+       card.addEventListener('mousemove', (e) => {
+         const rect = card.getBoundingClientRect();
+         const x = e.clientX - rect.left;
+         const y = e.clientY - rect.top;
+
+         const centerX = rect.width / 2;
+         const centerY = rect.height / 2;
+
+         const tiltX = ((y - centerY) / centerY) * -8;
+         const tiltY = ((x - centerX) / centerX) * 8;
+
+         gsap.to(card, {
+           duration: 0.4,
+           '--tilt-x': tiltX + 'deg',
+           '--tilt-y': tiltY + 'deg',
+           ease: 'power2.out'
+         });
+       });
+
+       card.addEventListener('mouseleave', () => {
+         gsap.to(card, {
+           duration: 0.6,
+           '--tilt-x': '0deg',
+           '--tilt-y': '0deg',
+           ease: 'power2.out'
+         });
+       });
+     });
+
+     // Touch/swipe support
+     let touchStartX = 0;
+     let touchEndX = 0;
+
+     sliderTrack?.addEventListener('touchstart', (e) => {
+       touchStartX = e.changedTouches[0].screenX;
+     }, { passive: true });
+
+     sliderTrack?.addEventListener('touchend', (e) => {
+       touchEndX = e.changedTouches[0].screenX;
+       handleSwipe();
+     }, { passive: true });
+
+     function handleSwipe() {
+       const swipeThreshold = 50;
+       const diff = touchStartX - touchEndX;
+
+       if (Math.abs(diff) > swipeThreshold) {
+         if (diff > 0) {
+           const nextIndex = currentIndex < totalSlides - 1 ? currentIndex + 1 : 0;
+           updateSlider(nextIndex);
+         } else {
+           const prevIndex = currentIndex > 0 ? currentIndex - 1 : totalSlides - 1;
+           updateSlider(prevIndex);
+         }
+         resetAutoPlay();
+       }
+     }
+
+     // Initialize auto-play
+     startAutoPlay();
+
+     // Pause auto-play on hover
+     sliderTrack?.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+     sliderTrack?.addEventListener('mouseleave', startAutoPlay);
+
+     // Product cards stagger
+    gsap.utils.toArray('.product-card').forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%'
+        },
+        duration: 1,
+        y: 60,
+        opacity: 0,
+        delay: i % 3 * 0.1,
+        ease: 'power4.out'
+      });
+    });
+
+    // Section reveals
+    gsap.from('.craft-content', {
+      scrollTrigger: {
+        trigger: '.craft-content',
+        start: 'top 80%'
+      },
+      duration: 1.2,
+      x: -50,
+      opacity: 0,
+      ease: 'power3.out'
+    });
+
+    gsap.from('.craft-media', {
+      scrollTrigger: {
+        trigger: '.craft-media',
+        start: 'top 80%'
+      },
+      duration: 1.2,
+      x: 50,
+      opacity: 0,
+      ease: 'power3.out'
+    });
+
+    // Category filter
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => {
+          t.classList.remove('active');
+          t.style.background = '#fff';
+          t.style.color = '#4b5563';
+        });
+        
+        tab.classList.add('active');
+        tab.style.background = '#c25e7c';
+        tab.style.color = '#fff';
+        
+         const cat = tab.getAttribute('data-cat');
+         document.querySelectorAll('.product-card').forEach(item => {
+           if (cat === 'All' || item.getAttribute('data-cat') === cat) {
+             gsap.to(item, { duration: 0.4, scale: 1, opacity: 1, display: 'flex' });
+           } else {
+             gsap.to(item, { duration: 0.4, scale: 0.9, opacity: 0, display: 'none' });
+           }
+         });
+      });
+    });
+
+function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      alert('Thank you for subscribing to the Maison Circle!');
+      e.target.reset();
+    }
+
+    function handleSearch(query) {
+      const resultsContainer = document.getElementById('searchResults');
+      if (!resultsContainer) return;
+      
+      if (!query || query.length < 2) {
+        resultsContainer.innerHTML = '<div class="search-hint"><i class="ti ti-search"></i><p>Type to search our collection...</p></div>';
+        return;
+      }
+      
+      // Demo products for search demo
+      const demoProducts = [
+        { id: 'sovereign', name: 'The Sovereign', category: 'Fountain', price: 2450 },
+        { id: 'rose-marble', name: 'Rose Marble', category: 'Ballpoint', price: 1850 },
+        { id: 'midnight-matte', name: 'Midnight Matte', category: 'Rollerball', price: 1650 },
+        { id: 'classic-ballpoint', name: 'Classic Ballpoint', category: 'Ballpoint', price: 195 },
+        { id: 'silk-gel', name: 'Silk Gel Ink', category: 'Gel', price: 85 }
+      ];
+      
+      const q = query.toLowerCase();
+      const filtered = demoProducts.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+      
+      if (filtered.length === 0) {
+        resultsContainer.innerHTML = '<div class="search-hint"><i class="ti ti-search"></i><p>No products found. Try a different search term.</p></div>';
+        return;
+      }
+      
+      resultsContainer.innerHTML = filtered.map(p => `
+        <div class="search-result-item" onclick="addToCart('${p.id}', '${p.name}', ${p.price}); closeSearchModal();">
+          <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=200&auto=format&fit=crop" alt="${p.name}">
+          <div class="search-result-info">
+            <h4>${p.name}</h4>
+            <p>${p.category}</p>
+          </div>
+          <span class="search-result-price">₱ ${p.price.toLocaleString()}</span>
+        </div>
+      `).join('');
+    }
+
+// ──────────────────────────────────────────
+    // SEARCH MODAL FUNCTIONS
+    // ──────────────────────────────────────────
+    function openSearchModal() {
+      const modal = document.getElementById('searchModal');
+      const overlay = document.getElementById('searchOverlay');
+      if (modal && overlay) {
+        modal.classList.add('show');
+        overlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          document.getElementById('globalSearchInput')?.focus();
+        }, 100);
+      }
+    }
+
+    function closeSearchModal() {
+      const modal = document.getElementById('searchModal');
+      const overlay = document.getElementById('searchOverlay');
+      if (modal && overlay) {
+        modal.classList.remove('show');
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+        document.getElementById('globalSearchInput').value = '';
+        document.getElementById('searchResults').innerHTML = '<div class="search-hint"><i class="ti ti-search"></i><p>Type to search our collection...</p></div>';
+      }
+    }
+
+     // ──────────────────────────────────────────
+     // MOBILE MENU FUNCTIONS
+     // ──────────────────────────────────────────
+    function toggleMobileMenu() {
+      const panel = document.getElementById('mobileMenuPanel');
+      const overlay = document.getElementById('mobileMenuOverlay');
+      if (panel && overlay) {
+        if (panel.classList.contains('show')) {
+          panel.classList.remove('show');
+          overlay.classList.remove('show');
+          document.body.style.overflow = '';
+        } else {
+          panel.classList.add('show');
+          overlay.classList.add('show');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+    }
+
+// ──────────────────────────────────────────
+    // CART FUNCTIONS
+    // ──────────────────────────────────────────
+    function openCart() {
+      const sidebar = document.getElementById('cartSidebar');
+      const overlay = document.getElementById('cartOverlay');
+      if (sidebar && overlay) {
+        sidebar.classList.add('show');
+        overlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        renderCartItems();
+      }
+    }
+
+    function closeCart() {
+      const sidebar = document.getElementById('cartSidebar');
+      const overlay = document.getElementById('cartOverlay');
+      if (sidebar && overlay) {
+        sidebar.classList.remove('show');
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function renderCartItems() {
+      const cart = loadCart();
+      const container = document.getElementById('cartItems');
+      if (!container) return;
+
+      if (cart.length === 0) {
+        container.innerHTML = '<div class="cart-empty"><i class="ti ti-shopping-bag"></i><p>Your cart is empty.</p></div>';
+        document.getElementById('cartSubtotal').textContent = '₱ 0.00';
+        document.getElementById('cartTotal').textContent = '₱ 0.00';
+        return;
+      }
+
+      let itemsHtml = '';
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        const itemTotal = (item.price || 0) * (item.qty || 0);
+        subtotal += itemTotal;
+        itemsHtml += `
+          <div class="cart-item">
+            <div class="cart-item-img-wrap">
+              <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=200&auto=format&fit=crop" alt="${item.name}" class="cart-item-img">
+            </div>
+            <div class="cart-item-details">
+              <div class="cart-item-top">
+                <div>
+                  <h4 class="cart-item-name">${item.name}</h4>
+                  <p class="cart-item-category">Premium Pen</p>
+                </div>
+                <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" aria-label="Remove item">
+                  <i class="ti ti-trash"></i>
+                </button>
+              </div>
+              <div class="cart-item-bottom">
+                <span class="cart-item-price">₱ ${itemTotal.toLocaleString()}</span>
+                <div class="cart-item-controls">
+                  <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                  <span class="qty-display">${item.qty || 0}</span>
+                  <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = itemsHtml;
+      document.getElementById('cartSubtotal').textContent = '₱ ' + subtotal.toLocaleString();
+      document.getElementById('cartTotal').textContent = '₱ ' + subtotal.toLocaleString();
+    }
+
+    function updateQty(id, change) {
+      let cart = loadCart();
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.qty = (item.qty || 0) + change;
+        if (item.qty <= 0) {
+          cart = cart.filter(i => i.id !== id);
+        }
+      }
+      saveCart(cart);
+      updateCartCountDisplay();
+      renderCartItems();
+    }
+
+    function removeFromCart(id) {
+      let cart = loadCart();
+      cart = cart.filter(i => i.id !== id);
+      saveCart(cart);
+      updateCartCountDisplay();
+      renderCartItems();
+      showToast('Item removed from cart');
+    }
+
+    const CART_STORAGE_KEY = 'inkspired_cart_v2';
+
+    function loadCart() {
+      try {
+        return JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    }
+
+    function updateCartCountDisplay() {
+      const cart = loadCart();
+      const count = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+      const countEl = document.getElementById('cart-count');
+      const mobileCountEl = document.getElementById('mobileCartCount');
+      if (countEl) countEl.textContent = count;
+      if (mobileCountEl) mobileCountEl.textContent = count;
+    }
+
+    function addToCart(id, name, price) {
+      let cart = loadCart();
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty = (existing.qty || 0) + 1;
+      } else {
+        cart.push({ id, name, price, qty: 1 });
+      }
+      saveCart(cart);
+      updateCartCountDisplay();
+      
+      // Show toast notification
+      showToast(`${name} added to cart!`);
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast-notification';
+      toast.innerHTML = `<i class="ti ti-check"></i> ${message}`;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Initialize cart count on load
+    document.addEventListener('DOMContentLoaded', updateCartCountDisplay);
+  </script>
+
+  <!-- Search Modal -->
+  <div id="searchOverlay" class="search-overlay" onclick="closeSearchModal()"></div>
+  <div id="searchModal" class="search-modal">
+    <div class="search-modal-header">
+      <div class="search-input-wrap">
+        <i class="ti ti-search"></i>
+        <input type="text" id="globalSearchInput" placeholder="Search premium pens..." oninput="handleSearch(this.value)">
+      </div>
+      <button onclick="closeSearchModal()" aria-label="Close"><i class="ti ti-x"></i></button>
+    </div>
+    <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

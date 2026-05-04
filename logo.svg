@@ -1,0 +1,27 @@
+<svg width="240" height="60" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#172A39;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FC563C;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E85D4A;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Pen icon -->
+  <g transform="translate(10, 15)">
+    <!-- Pen body -->
+    <rect x="0" y="10" width="25" height="10" rx="2" fill="url(#logoGradient)" />
+    <!-- Pen tip -->
+    <polygon points="25,12 35,15 25,18" fill="#FC563C" />
+    <!-- Ink -->
+    <circle cx="30" cy="15" r="2" fill="#172A39" />
+  </g>
+
+  <!-- Text -->
+  <text x="50" y="25" font-family="Cormorant Garamond, serif" font-size="20" font-weight="700" fill="#172A39">INK</text>
+  <text x="50" y="45" font-family="Cormorant Garamond, serif" font-size="20" font-weight="700" fill="url(#logoGradient)">SPIRED</text>
+
+  <!-- Decorative line -->
+  <line x1="45" y1="30" x2="45" y2="35" stroke="url(#logoGradient)" stroke-width="2"/>
+</svg>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INKSPIRED | Premium Pen Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/tabler-icons.min.css">
+   <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="style_append.css">
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+</head>
+<body>
+   <!-- Animated Background -->
+   <div class="bg-canvas"></div>
+   <div class="grain-overlay"></div>
+   <div class="floating-orb" style="width: 384px; height: 384px; background: #FFC9DE; top: -10%; left: -5%;"></div>
+   <div class="floating-orb" style="width: 500px; height: 500px; background: #FFDFDF; bottom: -10%; right: -10%;"></div>
+   <div id="mouseGlow"></div>
+
+   <!-- Pill Navbar -->
+   <nav id="pill-nav">
+     <a href="index.html" class="nav-logo">
+       INK<span>SPIRED</span>
+     </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link-pill">Home</a>
+        <a href="index.html#featured" class="nav-link-pill">Featured</a>
+        <a href="products.html" class="nav-link-pill active">Products</a>
+        <a href="index.html#shop" class="nav-link-pill">Shop</a>
+        <a href="index.html#craft" class="nav-link-pill">Craftsmanship</a>
+      </div>
+       <div class="nav-actions">
+         <a href="cart.html" class="nav-link-pill" style="display: flex; align-items: center; gap: 6px;" aria-label="Shopping bag">
+           <i class="ti ti-shopping-bag"></i>
+           <span id="cart-count">0</span>
+         </a>
+         <button type="button" onclick="openSearchModal()" aria-label="Search" title="Search">
+           <i class="ti ti-search"></i>
+         </button>
+         <a href="signin.html" class="nav-link-pill" aria-label="Sign in">
+           <i class="ti ti-user"></i>
+         </a>
+         <button type="button" onclick="toggleMobileMenu()" class="mobile-menu-toggle" aria-label="Menu" title="Menu">
+           <i class="ti ti-menu-2"></i>
+         </button>
+       </div>
+   </nav>
+
+   <!-- Mobile Menu Overlay & Panel -->
+   <div id="mobileMenuOverlay" class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+   <div id="mobileMenuPanel" class="mobile-menu-panel">
+     <div class="mobile-menu-header">
+       <span class="nav-logo">INK<span>SPIRED</span></span>
+       <button onclick="toggleMobileMenu()" aria-label="Close"><i class="ti ti-x"></i></button>
+     </div>
+      <div class="mobile-menu-links">
+        <a href="index.html"><i class="ti ti-home"></i> Home</a>
+        <a href="index.html#featured"><i class="ti ti-star"></i> Featured</a>
+        <a href="products.html"><i class="ti ti-package"></i> Products</a>
+        <a href="index.html#shop"><i class="ti ti-shopping-bag"></i> Shop</a>
+        <a href="index.html#craft"><i class="ti ti-writing"></i> Craftsmanship</a>
+        <a href="cart.html"><i class="ti ti-cart"></i> Cart</a>
+        <a href="contact.html"><i class="ti ti-message"></i> Contact</a>
+      </div>
+   </div>
+
+   <!-- Products Hero -->
+   <section class="products-hero">
+     <div class="container">
+       <h1 class="page-title">Our Collection</h1>
+       <p class="page-subtitle">Discover premium pens crafted for those who appreciate the art of writing</p>
+     </div>
+   </section>
+
+   <!-- Filters Sticky Bar -->
+   <section class="products-filters">
+     <div class="container">
+       <div class="filters-toolbar">
+          <div class="category-tabs">
+            <button class="tab active" data-cat="All">All Instruments</button>
+            <button class="tab" data-cat="Ballpen">Ballpoint</button>
+            <button class="tab" data-cat="Fountain">Fountain</button>
+            <button class="tab" data-cat="Rollerball">Rollerball</button>
+            <button class="tab" data-cat="Gel">Gel Ink</button>
+            <button class="tab" data-cat="Marker">Markers</button>
+          </div>
+         <div class="search-box">
+           <input type="text" id="searchInput" class="search-input" placeholder="Search premium pens..." />
+           <i class="ti ti-search search-icon"></i>
+         </div>
+       </div>
+     </div>
+   </section>
+
+   <!-- Products Grid -->
+   <section class="products-section">
+     <div class="container">
+       <div id="appGrid" class="products-grid">
+         <!-- Products will be loaded by script.js -->
+       </div>
+     </div>
+   </section>
+
+   <footer>
+     <div class="footer-container">
+       <div class="footer-top">
+         <div class="footer-brand">
+           <div class="footer-logo">INK<span>SPIRED</span></div>
+           <p>Crafting moments of inspiration since 2026. Every pen tells a story. What will yours be?</p>
+           <div class="footer-socials">
+             <a href="#" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+             <a href="#" aria-label="Facebook"><i class="ti ti-brand-facebook"></i></a>
+             <a href="#" aria-label="Messenger"><i class="ti ti-brand-messenger"></i></a>
+             <a href="admin.html" aria-label="Admin"><i class="ti ti-lock"></i></a>
+           </div>
+         </div>
+
+         <div class="footer-column">
+           <h4>Instruments</h4>
+           <ul>
+             <li><a href="products.html">Fountain Pens</a></li>
+             <li><a href="products.html">Ballpoint Pens</a></li>
+             <li><a href="products.html">Gel Ink Series</a></li>
+             <li><a href="products.html">Special Editions</a></li>
+           </ul>
+         </div>
+
+         <div class="footer-column">
+           <h4>Maison</h4>
+           <ul>
+             <li><a href="index.html#craft">Our Process</a></li>
+             <li><a href="#">The Heritage</a></li>
+             <li><a href="#">Bespoke Services</a></li>
+             <li><a href="contact.html">Care Guide</a></li>
+           </ul>
+         </div>
+
+         <div class="footer-column">
+           <h4>Account</h4>
+           <ul>
+             <li><a href="#">Sign In</a></li>
+             <li><a href="#">Create Account</a></li>
+             <li><a href="contact.html">Contact</a></li>
+           </ul>
+         </div>
+
+         <div class="footer-status">
+           <p>Status</p>
+           <div class="status-indicator">
+             <div class="pulse"></div>
+             <span>Boutique Open</span>
+           </div>
+         </div>
+       </div>
+
+       <div class="footer-bottom">
+         <p>© 2026 INKSPIRED Luxury. All rights reserved.</p>
+         <div>
+           <a href="#">Privacy</a> &nbsp;&nbsp;
+           <a href="#">Terms</a> &nbsp;&nbsp;
+           <a href="#">Cookie Policy</a>
+         </div>
+       </div>
+     </div>
+   </footer>
+
+   <!-- Search Modal -->
+   <div id="searchOverlay" class="search-overlay" onclick="closeSearchModal()"></div>
+   <div id="searchModal" class="search-modal">
+     <div class="search-modal-header">
+       <div class="search-input-wrap">
+         <i class="ti ti-search"></i>
+         <input type="text" id="globalSearchInput" placeholder="Search premium pens..." oninput="handleSearch(this.value)">
+       </div>
+       <button onclick="closeSearchModal()" aria-label="Close"><i class="ti ti-x"></i></button>
+     </div>
+     <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <!-- Cart Overlay & Sidebar -->
+   <div id="cartOverlay" class="cart-overlay" onclick="closeCart()"></div>
+   <aside id="cartSidebar" class="cart-sidebar" aria-hidden="true">
+     <div class="cart-header">
+       <h2>Your Cart</h2>
+       <button type="button" onclick="closeCart()" aria-label="Close cart">
+         <i class="ti ti-x"></i>
+       </button>
+     </div>
+     <div id="cartItems" class="cart-items">
+       <div class="cart-empty">
+         <i class="ti ti-shopping-bag"></i>
+         <p>Your cart is empty.</p>
+       </div>
+     </div>
+     <div class="cart-footer">
+       <div class="cart-summary">
+         <div class="cart-subtotal-row">
+           <span>Subtotal</span>
+           <span id="cartSubtotal">₱ 0.00</span>
+         </div>
+         <div class="cart-total-row">
+           <span>Total</span>
+           <strong id="cartTotal">₱ 0.00</strong>
+         </div>
+       </div>
+       <a href="checkout.html" class="btn-primary w-full" style="display: block; text-align: center;">
+         Proceed to Checkout
+       </a>
+     </div>
+    </aside>
+
+    <script src="script.js"></script>
+</body>
+</html>

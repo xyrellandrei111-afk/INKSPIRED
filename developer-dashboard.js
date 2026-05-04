@@ -21,7 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function initDeveloperDashboard() {
   bindDeveloperEvents();
-  await restoreDeveloperSession();
+  const savedMode = DevDashboard.readStorage(DevDashboard.STORAGE_KEYS.dashboardMode);
+  if (savedMode === 'developer-demo') {
+    enterDeveloperDemoMode();
+  } else {
+    await restoreDeveloperSession();
+  }
 }
 
 function bindDeveloperEvents() {
@@ -224,14 +229,14 @@ async function logoutDeveloper() {
   } catch (error) {
     console.warn('Developer logout warning:', error);
   } finally {
+    developerState.mode = 'live';
     developerState.currentUser = null;
     developerState.profile = null;
     developerState.apps = [];
     developerState.reviews = [];
     developerState.sales = [];
-    document.getElementById('developerApp')?.classList.add('hidden');
-    document.getElementById('developerAuthScreen')?.classList.remove('hidden');
-    setDeveloperAuthState('Signed out. You can sign back in or continue with demo mode.');
+    DevDashboard.writeStorage(DevDashboard.STORAGE_KEYS.dashboardMode, null);
+    window.location.href = 'index.html';
   }
 }
 

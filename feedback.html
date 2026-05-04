@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback | INKSPIRED</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_append.css">
+</head>
+<body style="margin: 0; padding: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #FFF5F7;">
+
+  <!-- Feedback Card -->
+  <div style="width: 100%; max-width: 520px; padding: 32px;">
+    <div class="glass-panel" style="background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(194, 94, 124, 0.15); border-radius: 24px; padding: 40px; box-shadow: 0 20px 60px -10px rgba(194, 94, 124, 0.15);">
+
+      <!-- Back Button -->
+      <div style="text-align: left; margin-bottom: 20px;">
+        <a href="index.html" style="display: inline-flex; align-items: center; gap: 8px; color: #c25e7c; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 8px 12px; border: 1px solid rgba(194, 94, 124, 0.2); border-radius: 8px; transition: all 0.3s; background: rgba(255, 255, 255, 0.5);">
+          <i class="ti ti-arrow-left" style="font-size: 1rem;"></i> Back to Home
+        </a>
+      </div>
+
+      <!-- Logo & Title -->
+      <div style="text-align: center; margin-bottom: 40px;">
+        <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2rem; color: #1A0F14; margin-bottom: 8px;">
+          INK<span style="color: #c25e7c;">SPIRED</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 6px; color: #c25e7c; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">
+          <i class="fa-solid fa-comments"></i> Customer Feedback
+        </div>
+        <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: #1A0F14; margin: 0 0 8px;">Share Your Thoughts</h1>
+        <p style="color: #6b7280; font-size: 0.9rem; margin: 0;">Help us improve your experience with premium writing instruments</p>
+      </div>
+
+      <!-- Feedback Form -->
+      <form id="feedbackForm" onsubmit="handleFeedbackSubmit(event)">
+        <div style="margin-bottom: 20px;">
+          <label for="feedbackName" style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.875rem; color: #1A0F14;">Full Name</label>
+          <input type="text" id="feedbackName" class="form-input" placeholder="Enter your full name" required style="width: 100%; padding: 14px 16px; border: 1px solid rgba(194, 94, 124, 0.2); border-radius: 12px; font-size: 1rem; background: white; transition: all 0.2s; box-sizing: border-box;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label for="feedbackEmail" style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.875rem; color: #1A0F14;">Email Address</label>
+          <input type="email" id="feedbackEmail" class="form-input" placeholder="your.email@example.com" required style="width: 100%; padding: 14px 16px; border: 1px solid rgba(194, 94, 124, 0.2); border-radius: 12px; font-size: 1rem; background: white; transition: all 0.2s; box-sizing: border-box;">
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <label style="display: block; margin-bottom: 12px; font-weight: 600; font-size: 0.875rem; color: #1A0F14;">Rate Your Experience</label>
+          <div id="starRating" style="display: flex; gap: 8px; justify-content: center;">
+            <i class="ti ti-star" data-rating="1" style="font-size: 1.5rem; color: #e5e7eb; cursor: pointer; transition: color 0.2s;"></i>
+            <i class="ti ti-star" data-rating="2" style="font-size: 1.5rem; color: #e5e7eb; cursor: pointer; transition: color 0.2s;"></i>
+            <i class="ti ti-star" data-rating="3" style="font-size: 1.5rem; color: #e5e7eb; cursor: pointer; transition: color 0.2s;"></i>
+            <i class="ti ti-star" data-rating="4" style="font-size: 1.5rem; color: #e5e7eb; cursor: pointer; transition: color 0.2s;"></i>
+            <i class="ti ti-star" data-rating="5" style="font-size: 1.5rem; color: #e5e7eb; cursor: pointer; transition: color 0.2s;"></i>
+          </div>
+          <input type="hidden" id="ratingValue" value="0">
+        </div>
+
+        <div style="margin-bottom: 28px;">
+          <label for="feedbackMessage" style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.875rem; color: #1A0F14;">Your Feedback</label>
+          <textarea id="feedbackMessage" class="form-input" placeholder="Tell us about your experience, suggestions for improvement, or any issues you've encountered..." required style="width: 100%; padding: 14px 16px; border: 1px solid rgba(194, 94, 124, 0.2); border-radius: 12px; font-size: 1rem; background: white; transition: all 0.2s; box-sizing: border-box; min-height: 120px; resize: vertical;"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 16px; font-size: 1rem; font-weight: 700; border-radius: 9999px; border: none; background: linear-gradient(135deg, #c25e7c, #a0455d); color: white; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 24px rgba(194, 94, 124, 0.25); margin-bottom: 20px;">
+          <i class="ti ti-send" style="margin-right: 8px;"></i> Submit Feedback
+        </button>
+      </form>
+
+      <!-- Contact Info -->
+      <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(194, 94, 124, 0.1);">
+        <p style="font-size: 0.875rem; color: #6b7280; margin: 0;">
+          For urgent matters, contact us at <a href="mailto:support@inkspired.com" style="color: #c25e7c; font-weight: 600; text-decoration: none;">support@inkspired.com</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Success Overlay -->
+  <div id="successOverlay" style="display: none; position: fixed; inset: 0; background: rgba(26, 15, 20, 0.9); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="text-align: center; color: white;">
+      <i class="ti ti-check" style="font-size: 4rem; color: #10b981; margin-bottom: 24px;"></i>
+      <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; margin: 0 0 8px;">Thank You!</h2>
+      <p style="font-size: 1rem; margin: 0 0 24px;">Your feedback has been submitted successfully.</p>
+      <p style="font-size: 0.9rem; opacity: 0.8; margin: 0;">We appreciate your input and will use it to improve our service.</p>
+    </div>
+  </div>
+
+  <script>
+    let currentRating = 0;
+
+    // Star rating functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const stars = document.querySelectorAll('#starRating i');
+      const ratingInput = document.getElementById('ratingValue');
+
+      stars.forEach((star, index) => {
+        star.addEventListener('click', () => {
+          currentRating = index + 1;
+          ratingInput.value = currentRating;
+
+          // Update star colors
+          stars.forEach((s, i) => {
+            s.style.color = i < currentRating ? '#FFD700' : '#e5e7eb';
+          });
+        });
+
+        star.addEventListener('mouseenter', () => {
+          stars.forEach((s, i) => {
+            s.style.color = i <= index ? '#FFD700' : '#e5e7eb';
+          });
+        });
+
+        star.addEventListener('mouseleave', () => {
+          stars.forEach((s, i) => {
+            s.style.color = i < currentRating ? '#FFD700' : '#e5e7eb';
+          });
+        });
+      });
+    });
+
+    function handleFeedbackSubmit(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('feedbackName').value.trim();
+      const email = document.getElementById('feedbackEmail').value.trim();
+      const message = document.getElementById('feedbackMessage').value.trim();
+      const rating = document.getElementById('ratingValue').value;
+
+      if (!name || !email || !message) {
+        alert('Please fill in all required fields');
+        return;
+      }
+
+      if (rating === '0') {
+        alert('Please provide a rating for your experience');
+        return;
+      }
+
+      // Create feedback object
+      const feedback = {
+        name: name,
+        email: email,
+        rating: parseInt(rating),
+        message: message,
+        submittedAt: new Date().toISOString(),
+        userAgent: navigator.userAgent
+      };
+
+      // Store feedback (in production, this would be sent to a server)
+      console.log('Feedback submitted:', feedback);
+
+      // Store in localStorage for demo purposes
+      const existingFeedback = JSON.parse(localStorage.getItem('inkspired_feedback') || '[]');
+      existingFeedback.push(feedback);
+      localStorage.setItem('inkspired_feedback', JSON.stringify(existingFeedback));
+
+      // Show success overlay
+      document.getElementById('successOverlay').style.display = 'flex';
+
+      // Reset form
+      document.getElementById('feedbackForm').reset();
+      currentRating = 0;
+      document.querySelectorAll('#starRating i').forEach(star => {
+        star.style.color = '#e5e7eb';
+      });
+      document.getElementById('ratingValue').value = '0';
+
+      // Hide overlay and redirect after delay
+      setTimeout(() => {
+        document.getElementById('successOverlay').style.display = 'none';
+        // Optional: redirect back to home
+        // window.location.href = 'index.html';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

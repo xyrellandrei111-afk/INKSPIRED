@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart | INKSPIRED Luxury</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_append.css">
+  <style>
+    .cart-page {
+      min-height: 100vh;
+      padding: 120px 32px 64px;
+      background: #FFF5F7;
+    }
+    .cart-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .cart-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .cart-header h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: #1A0F14;
+      margin-bottom: 12px;
+    }
+    .cart-header p {
+      color: #6b7280;
+      font-size: 1.125rem;
+    }
+    .cart-empty-page {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .cart-empty-page i {
+      font-size: 4rem;
+      color: #FFC9DE;
+      margin-bottom: 24px;
+    }
+    .cart-empty-page h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.75rem;
+      color: #1A0F14;
+      margin-bottom: 12px;
+    }
+    .cart-empty-page p {
+      color: #6b7280;
+      margin-bottom: 32px;
+    }
+    .cart-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .cart-item-card {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(16px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      gap: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .cart-item-card:hover {
+      border-color: rgba(194, 94, 124, 0.2);
+      box-shadow: 0 8px 32px rgba(194, 94, 124, 0.1);
+    }
+    .cart-item-img-wrap {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #FFC9DE, #F4EDDB);
+      border: 1px solid rgba(194, 94, 124, 0.12);
+    }
+    .cart-item-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    .cart-item-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .cart-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .cart-item-name {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1A0F14;
+      margin: 0 0 4px;
+    }
+    .cart-item-category {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    .cart-item-remove {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: transparent;
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      color: #dc2626;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .cart-item-remove:hover {
+      background: #dc2626;
+      border-color: #dc2626;
+      color: white;
+      transform: scale(1.05);
+    }
+    .cart-item-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .cart-item-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #c25e7c;
+    }
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #F4EDDB;
+      border: 1px solid rgba(194, 94, 124, 0.2);
+      color: #c25e7c;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .qty-btn:hover {
+      background: #FFC9DE;
+      transform: scale(1.08);
+    }
+    .qty-display {
+      min-width: 32px;
+      text-align: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1A0F14;
+    }
+    .cart-summary-card {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(16px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 24px;
+      padding: 32px;
+      margin-top: 24px;
+    }
+    .cart-summary-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1A0F14;
+      margin-bottom: 24px;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 1rem;
+      color: #4b5563;
+    }
+    .summary-row.total {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #c25e7c;
+      padding-top: 16px;
+      border-top: 2px solid rgba(194, 94, 124, 0.15);
+      margin-top: 16px;
+    }
+    .proceed-btn {
+      width: 100%;
+      padding: 18px 32px;
+      background: linear-gradient(135deg, #c25e7c, #a0455d);
+      color: #FFFFFF;
+      font-size: 1.125rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      margin-top: 24px;
+      box-shadow: 0 8px 32px rgba(194, 94, 124, 0.25);
+    }
+    .proceed-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(194, 94, 124, 0.35);
+    }
+    .continue-shopping {
+      display: block;
+      text-align: center;
+      margin-top: 16px;
+      color: #c25e7c;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .continue-shopping:hover {
+      color: #a0455d;
+    }
+    @media (max-width: 768px) {
+      .cart-page {
+        padding: 100px 16px 48px;
+      }
+      .cart-item-card {
+        flex-direction: column;
+        padding: 16px;
+      }
+      .cart-item-img-wrap {
+        width: 100%;
+        height: 200px;
+      }
+      .cart-item-bottom {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-canvas"></div>
+  <div class="grain-overlay"></div>
+
+  <!-- Pill Navbar -->
+  <nav id="pill-nav">
+    <a href="index.html" class="nav-logo">
+      INK<span>SPIRED</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link-pill">Home</a>
+      <a href="index.html#featured" class="nav-link-pill">Featured</a>
+      <a href="index.html#shop" class="nav-link-pill">Shop</a>
+      <a href="index.html#craft" class="nav-link-pill">Craftsmanship</a>
+    </div>
+       <div class="nav-actions">
+         <a href="cart.html" class="nav-link-pill" style="display: flex; align-items: center; gap: 6px;">
+           <i class="ti ti-shopping-bag"></i>
+           <span id="cart-count">0</span>
+         </a>
+         <button type="button" onclick="openSearchModal()" aria-label="Search">
+           <i class="ti ti-search"></i>
+         </button>
+         <a href="signin.html" class="nav-link-pill" aria-label="Sign in">
+           <i class="ti ti-user"></i>
+         </a>
+         <button type="button" onclick="toggleMobileMenu()" class="mobile-menu-toggle" aria-label="Menu">
+           <i class="ti ti-menu-2"></i>
+         </button>
+       </div>
+  </nav>
+
+  <!-- Cart Page -->
+  <main class="cart-page">
+    <div class="cart-container">
+      <div class="cart-header">
+        <h1>Your Shopping Bag</h1>
+        <p>Review your selections before proceeding to checkout</p>
+      </div>
+
+      <div id="cartContent">
+        <!-- Cart items will be rendered here -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Cart/Order Modals & Scripts -->
+  <div id="searchModal" class="search-modal">
+    <div class="search-overlay" onclick="closeSearchModal()"></div>
+    <div class="search-modal-content" style="position: relative; background: white; border-radius: 24px; padding: 24px;">
+      <div class="search-header">
+        <div class="search-input-wrap">
+          <i class="ti ti-search"></i>
+          <input type="text" id="globalSearchInput" placeholder="Search products..." oninput="handleSearch(this.value)">
+        </div>
+        <button onclick="closeSearchModal()"><i class="ti ti-x"></i></button>
+      </div>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </div>
+
+  <script>
+    const CART_STORAGE_KEY = 'inkspired_cart_v2';
+
+    function loadCart() {
+      try {
+        return JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    }
+
+    function updateCartCountDisplay() {
+      const cart = loadCart();
+      const count = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+      const countEl = document.getElementById('cart-count');
+      if (countEl) countEl.textContent = count;
+    }
+
+    function removeFromCart(id) {
+      let cart = loadCart();
+      cart = cart.filter(i => i.id !== id);
+      saveCart(cart);
+      updateCartCountDisplay();
+      renderCartPage();
+    }
+
+    function updateQty(id, change) {
+      let cart = loadCart();
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.qty = (item.qty || 0) + change;
+        if (item.qty <= 0) {
+          cart = cart.filter(i => i.id !== id);
+        }
+      }
+      saveCart(cart);
+      updateCartCountDisplay();
+      renderCartPage();
+    }
+
+    function renderCartPage() {
+      const cart = loadCart();
+      const container = document.getElementById('cartContent');
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="cart-empty-page">
+            <i class="ti ti-shopping-bag"></i>
+            <h2>Your bag is empty</h2>
+            <p>Looks like you haven't added any pens yet.</p>
+            <a href="index.html#shop" class="btn-primary" style="display: inline-block; padding: 16px 40px; text-decoration: none;">Explore Collection</a>
+          </div>
+        `;
+        return;
+      }
+
+      let itemsHtml = '';
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        const itemTotal = (item.price || 0) * (item.qty || 0);
+        subtotal += itemTotal;
+        itemsHtml += `
+          <div class="cart-item-card">
+            <div class="cart-item-img-wrap">
+              <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=400&auto=format&fit=crop" alt="${item.name}" class="cart-item-img">
+            </div>
+            <div class="cart-item-details">
+              <div class="cart-item-header">
+                <div>
+                  <h3 class="cart-item-name">${item.name}</h3>
+                  <p class="cart-item-category">Premium Pen</p>
+                </div>
+                <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" aria-label="Remove item">
+                  <i class="ti ti-trash"></i>
+                </button>
+              </div>
+              <div class="cart-item-bottom">
+                <span class="cart-item-price">₱ ${itemTotal.toLocaleString()}</span>
+                <div class="cart-item-controls">
+                  <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                  <span class="qty-display">${item.qty || 0}</span>
+                  <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="cart-items-list">
+          ${itemsHtml}
+        </div>
+        <div class="cart-summary-card">
+          <h3 class="cart-summary-title">Order Summary</h3>
+          <div class="summary-row">
+            <span>Subtotal (${cart.reduce((s, i) => s + (i.qty || 0), 0)} items)</span>
+            <span>₱ ${subtotal.toLocaleString()}</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span>Free</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span>₱ ${subtotal.toLocaleString()}</span>
+          </div>
+          <button class="proceed-btn" onclick="proceedToCheckout()">
+            Proceed to Checkout <i class="ti ti-arrow-right" style="margin-left: 8px;"></i>
+          </button>
+          <a href="index.html" class="continue-shopping">← Continue Shopping</a>
+        </div>
+      `;
+    }
+
+    function proceedToCheckout() {
+      const cart = loadCart();
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      localStorage.setItem('inkspired_pending_order', JSON.stringify(cart));
+      window.location.href = 'order.html';
+    }
+
+    // Search Modal
+    function openSearchModal() {
+      const modal = document.getElementById('searchModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.style.opacity = '1';
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('globalSearchInput')?.focus(), 100);
+      }
+    }
+
+    function closeSearchModal() {
+      const modal = document.getElementById('searchModal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.style.opacity = '0';
+        document.body.style.overflow = '';
+      }
+    }
+
+     // Initialize
+     document.addEventListener('DOMContentLoaded', () => {
+       updateCartCountDisplay();
+       renderCartPage();
+       updateNavUserState();
+     });
+
+    // Mobile Menu Functions (copied from index.html)
+    function toggleMobileMenu() {
+      const panel = document.getElementById('mobileMenuPanel');
+      const overlay = document.getElementById('mobileMenuOverlay');
+      if (panel && overlay) {
+        if (panel.classList.contains('show')) {
+          panel.classList.remove('show');
+          overlay.classList.remove('show');
+          document.body.style.overflow = '';
+        } else {
+          panel.classList.add('show');
+          overlay.classList.add('show');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+    }
+
+    function openSearchModal() {
+      const modal = document.getElementById('searchModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.style.opacity = '1';
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('globalSearchInput')?.focus(), 100);
+      }
+    }
+
+    function closeSearchModal() {
+      const modal = document.getElementById('searchModal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.style.opacity = '0';
+        document.body.style.overflow = '';
+      }
+    }
+  </script>
+
+  <!-- Mobile Menu Panel -->
+  <div id="mobileMenuOverlay" class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+  <div id="mobileMenuPanel" class="mobile-menu-panel">
+    <div class="mobile-menu-header">
+      <span class="nav-logo">INK<span>SPIRED</span></span>
+      <button onclick="toggleMobileMenu()" aria-label="Close"><i class="ti ti-x"></i></button>
+    </div>
+       <div class="mobile-menu-links">
+         <a href="index.html"><i class="ti ti-home"></i> Home</a>
+         <a href="index.html#featured"><i class="ti ti-star"></i> Featured</a>
+         <a href="products.html"><i class="ti ti-package"></i> Products</a>
+         <a href="index.html#shop"><i class="ti ti-shopping-bag"></i> Shop</a>
+         <a href="index.html#craft"><i class="ti ti-writing"></i> Craftsmanship</a>
+         <a href="cart.html"><i class="ti ti-cart"></i> Cart</a>
+         <a href="contact.html"><i class="ti ti-message"></i> Contact</a>
+         <a href="signin.html"><i class="ti ti-user"></i> Sign In</a>
+       </div>
+  </div>
+</body>
+</html>

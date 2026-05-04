@@ -1,8 +1,8 @@
 
 {
-    "vscode-pets.position": "panel",
+    "vscode-pets.position": "explorer",
     "vscode-pets.throwBallWithMouse": true,
-    "vscode-pets.theme": "autumn",
+    "vscode-pets.theme": "beach",
     "vscode-pets.petSize": "medium",
     "vscode-pets.petColor": "lightbrown"
 }

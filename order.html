@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | INKSPIRED Luxury</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_append.css">
+  <style>
+    .checkout-page {
+      min-height: 100vh;
+      padding: 120px 32px 64px;
+      background: #FFF5F7;
+    }
+    .checkout-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .checkout-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .checkout-header h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: #1A0F14;
+      margin-bottom: 12px;
+    }
+    .checkout-header p {
+      color: #6b7280;
+      font-size: 1.125rem;
+    }
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+    .order-form-card {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(16px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 24px;
+      padding: 40px;
+    }
+    .form-section-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1A0F14;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #c25e7c;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .form-group {
+      margin-bottom: 0;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1A0F14;
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1rem;
+      font-family: "Inter", sans-serif;
+      color: #1A0F14;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1.5px solid rgba(194, 94, 124, 0.2);
+      border-radius: 12px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: #c25e7c;
+      box-shadow: 0 0 0 4px rgba(194, 94, 124, 0.12);
+      background: white;
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+    .payment-method-section {
+      margin-top: 32px;
+    }
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid #c25e7c;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 12px;
+    }
+    .payment-option input[type="radio"] {
+      display: none;
+    }
+    .payment-option i {
+      font-size: 1.8rem;
+      color: #c25e7c;
+    }
+    .payment-option strong {
+      font-size: 1rem;
+      color: #1A0F14;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .payment-option p {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin: 0;
+    }
+    .payment-selected {
+      background: linear-gradient(135deg, rgba(194, 94, 124, 0.08), rgba(255, 201, 222, 0.06));
+      border-color: #c25e7c;
+    }
+    .place-order-btn {
+      width: 100%;
+      padding: 18px 32px;
+      background: linear-gradient(135deg, #c25e7c, #a0455d);
+      color: #FFFFFF;
+      font-size: 1.125rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      margin-top: 32px;
+      box-shadow: 0 8px 32px rgba(194, 94, 124, 0.25);
+    }
+    .place-order-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(194, 94, 124, 0.35);
+    }
+    .order-summary-card {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(16px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 24px;
+      padding: 32px;
+      position: sticky;
+      top: 140px;
+    }
+    .order-summary-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1A0F14;
+      margin-bottom: 24px;
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+    .summary-line.total {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #c25e7c;
+      padding-top: 16px;
+      border-top: 2px solid rgba(194, 94, 124, 0.15);
+      margin-top: 16px;
+    }
+    .back-to-cart {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      color: #6b7280;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .back-to-cart:hover {
+      color: #c25e7c;
+    }
+    @media (max-width: 768px) {
+      .checkout-page {
+        padding: 100px 16px 48px;
+      }
+      .order-form-card {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-canvas"></div>
+  <div class="grain-overlay"></div>
+
+  <!-- Pill Navbar -->
+  <nav id="pill-nav">
+    <a href="index.html" class="nav-logo">
+      INK<span>SPIRED</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link-pill">Home</a>
+      <a href="index.html#featured" class="nav-link-pill">Featured</a>
+      <a href="index.html#shop" class="nav-link-pill">Shop</a>
+      <a href="index.html#craft" class="nav-link-pill">Craftsmanship</a>
+    </div>
+    <div class="nav-actions">
+      <a href="cart.html" class="nav-link-pill" style="display: flex; align-items: center; gap: 6px;">
+        <i class="ti ti-shopping-bag"></i>
+        <span id="cart-count">0</span>
+      </a>
+         <button type="button" onclick="openSearchModal()" aria-label="Search">
+           <i class="ti ti-search"></i>
+         </button>
+         <a href="signin.html" class="nav-link-pill" aria-label="Sign in">
+           <i class="ti ti-user"></i>
+         </a>
+         <button type="button" onclick="toggleMobileMenu()" class="mobile-menu-toggle" aria-label="Menu">
+        <i class="ti ti-menu-2"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Checkout Page -->
+  <main class="checkout-page">
+    <div class="checkout-container">
+      <div class="checkout-header">
+        <h1>Checkout</h1>
+        <p>Complete your order with your delivery details</p>
+      </div>
+
+      <div class="checkout-grid">
+        <form class="order-form-card" id="orderForm" onsubmit="submitOrder(event)">
+          <h2 class="form-section-title">Delivery Information</h2>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="fullName">Full Name *</label>
+              <input type="text" id="fullName" name="fullName" placeholder="Juan Dela Cruz" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" placeholder="+63 912 345 6789" required pattern="[+0-9]{10,}">
+            </div>
+            <div class="form-group full-width">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" placeholder="juan@example.com" required>
+            </div>
+            <div class="form-group full-width">
+              <label for="street">Street Address *</label>
+              <input type="text" id="street" name="street" placeholder="123 Rizal Street" required>
+            </div>
+            <div class="form-group">
+              <label for="barangay">Barangay *</label>
+              <input type="text" id="barangay" name="barangay" placeholder="Buenavista" required>
+            </div>
+            <div class="form-group">
+              <label for="town">Town/Municipality *</label>
+              <input type="text" id="town" name="town" placeholder="Urdaneta City" required>
+            </div>
+            <div class="form-group">
+              <label for="city">City/Province *</label>
+              <input type="text" id="city" name="city" placeholder="Pangasinan" required>
+            </div>
+            <div class="form-group">
+              <label for="postalCode">Postal Code</label>
+              <input type="text" id="postalCode" name="postalCode" placeholder="2400">
+            </div>
+            <div class="form-group full-width">
+              <label for="landmarks">Landmarks / Building (Optional)</label>
+              <textarea id="landmarks" name="landmarks" placeholder="Near the public market, beside the church..."></textarea>
+            </div>
+          </div>
+
+          <div class="payment-method-section">
+            <h3 class="form-section-title" style="margin-top: 0;">Payment Method</h3>
+            <label class="payment-option" id="codOption">
+              <input type="radio" name="payment" value="cod" checked style="display: none;">
+              <i class="ti ti-cash"></i>
+              <div>
+                <strong>Cash on Delivery (COD)</strong>
+                <p>Pay in cash when your order arrives</p>
+              </div>
+            </label>
+          </div>
+
+          <button type="submit" class="place-order-btn">
+            Place Order <i class="ti ti-check" style="margin-left: 8px;"></i>
+          </button>
+        </form>
+
+        <div class="order-summary-card">
+          <h3 class="order-summary-title">Order Summary</h3>
+          <div id="orderSummaryItems"></div>
+          <div class="summary-line total">
+            <span>Total</span>
+            <span id="orderTotal">₱ 0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Search Modal -->
+  <div id="searchModal" class="search-modal">
+    <div class="search-overlay" onclick="closeSearchModal()"></div>
+    <div class="search-modal-content" style="position: relative; background: white; border-radius: 24px; padding: 24px;">
+      <div class="search-header">
+        <div class="search-input-wrap">
+          <i class="ti ti-search"></i>
+          <input type="text" id="globalSearchInput" placeholder="Search products..." oninput="handleSearch(this.value)">
+        </div>
+        <button onclick="closeSearchModal()"><i class="ti ti-x"></i></button>
+      </div>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </div>
+
+  <script>
+    const CART_STORAGE_KEY = 'inkspired_cart_v2';
+    const ORDERS_STORAGE_KEY = 'inkspired_orders';
+
+    function loadCart() {
+      try {
+        return JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function updateCartCountDisplay() {
+      const cart = loadCart();
+      const count = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+      const countEl = document.getElementById('cart-count');
+      if (countEl) countEl.textContent = count;
+    }
+
+    function renderOrderSummary() {
+      const cart = loadCart();
+      const container = document.getElementById('orderSummaryItems');
+      let subtotal = 0;
+
+      let html = '';
+      cart.forEach(item => {
+        const itemTotal = (item.price || 0) * (item.qty || 0);
+        subtotal += itemTotal;
+        html += `
+          <div class="summary-line" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(194,94,124,0.1);">
+            <div>
+              <div style="font-weight: 600; color: #1A0F14;">${item.name}</div>
+              <div style="font-size: 0.85rem; color: #6b7280;">Qty: ${item.qty}</div>
+            </div>
+            <span style="font-weight: 600; color: #c25e7c;">₱ ${itemTotal.toLocaleString()}</span>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      document.getElementById('orderTotal').textContent = '₱ ' + subtotal.toLocaleString();
+    }
+
+    function submitOrder(e) {
+      e.preventDefault();
+
+      const cart = loadCart();
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+
+      const form = e.target;
+      const orderData = {
+        orderId: 'ORD-' + Date.now().toString().slice(-8),
+        items: cart,
+        subtotal: cart.reduce((sum, item) => sum + (item.price || 0) * (item.qty || 0), 0),
+        shipping: 0,
+        total: cart.reduce((sum, item) => sum + (item.price || 0) * (item.qty || 0), 0),
+        customer: {
+          fullName: form.fullName.value,
+          phone: form.phone.value,
+          email: form.email.value,
+          street: form.street.value,
+          barangay: form.barangay.value,
+          town: form.town.value,
+          city: form.city.value,
+          postalCode: form.postalCode.value,
+          landmarks: form.landmarks.value
+        },
+        payment: form.payment.value,
+        status: 'pending',
+        createdAt: new Date().toISOString()
+      };
+
+      // Save order
+      const orders = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY) || '[]');
+      orders.push(orderData);
+      localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+
+      // Clear cart
+      saveCart([]);
+      updateCartCountDisplay();
+
+      // Simulate confirmation messages
+      simulateConfirmations(orderData);
+
+      // Redirect to success page with order ID
+      sessionStorage.setItem('lastOrderId', orderData.orderId);
+      window.location.href = 'order-success.html';
+    }
+
+    function simulateConfirmations(orderData) {
+      console.log('=== ORDER CONFIRMATION SIMULATION ===');
+      console.log('SMS to:', orderData.customer.phone);
+      console.log('Message: Thank you for your order! Your order ID:', orderData.orderId, 'is being processed.');
+      console.log('');
+      console.log('Email to:', orderData.customer.email);
+      console.log('Subject: Order Confirmation - INKSPIRED Luxury');
+      console.log('Body: Dear', orderData.customer.fullName + ',');
+      console.log('Your order', orderData.orderId, 'has been received. Total: ₱', orderData.total.toLocaleString());
+      console.log('We will deliver to:', orderData.customer.street + ', ' + orderData.customer.barangay + ', ' + orderData.customer.town + ', ' + orderData.customer.city);
+      console.log('=====================================');
+
+      // Show a brief message that confirmation was sent
+      alert('Order placed successfully! Confirmation details will be sent to your email and phone.');
+    }
+
+    function openSearchModal() {
+      const modal = document.getElementById('searchModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.style.opacity = '1';
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('globalSearchInput')?.focus(), 100);
+      }
+    }
+
+     function closeSearchModal() {
+       const modal = document.getElementById('searchModal');
+       if (modal) {
+         modal.style.display = 'none';
+         modal.style.opacity = '0';
+         document.body.style.overflow = '';
+       }
+     }
+
+     // Mobile Menu Functions
+     function toggleMobileMenu() {
+       const panel = document.getElementById('mobileMenuPanel');
+       const overlay = document.getElementById('mobileMenuOverlay');
+       if (panel && overlay) {
+         if (panel.classList.contains('show')) {
+           panel.classList.remove('show');
+           overlay.classList.remove('show');
+           document.body.style.overflow = '';
+         } else {
+           panel.classList.add('show');
+           overlay.classList.add('show');
+           document.body.style.overflow = 'hidden';
+         }
+       }
+     }
+
+      // Payment option selection visual feedback
+      document.addEventListener('DOMContentLoaded', () => {
+        updateCartCountDisplay();
+        renderOrderSummary();
+        updateNavUserState();
+
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        paymentOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            const radio = this.querySelector('input[type="radio"]');
+            radio.checked = true;
+            paymentOptions.forEach(opt => opt.classList.remove('payment-selected'));
+            this.classList.add('payment-selected');
+          });
+        });
+
+        // Set initial selection
+        document.querySelector('input[name="payment"]:checked')?.parentElement.classList.add('payment-selected');
+      });
+        });
+
+        // Set initial selection
+        document.querySelector('input[name="payment"]:checked')?.parentElement.classList.add('payment-selected');
+      });
+   </script>
+
+   <!-- Mobile Menu -->
+   <div id="mobileMenuOverlay" class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+   <div id="mobileMenuPanel" class="mobile-menu-panel">
+     <div class="mobile-menu-header">
+       <span class="nav-logo">INK<span>SPIRED</span></span>
+       <button onclick="toggleMobileMenu()" aria-label="Close"><i class="ti ti-x"></i></button>
+     </div>
+     <div class="mobile-menu-links">
+       <a href="index.html"><i class="ti ti-home"></i> Home</a>
+       <a href="index.html#featured"><i class="ti ti-star"></i> Featured</a>
+       <a href="products.html"><i class="ti ti-package"></i> Products</a>
+       <a href="index.html#shop"><i class="ti ti-shopping-bag"></i> Shop</a>
+       <a href="index.html#craft"><i class="ti ti-writing"></i> Craftsmanship</a>
+       <a href="cart.html"><i class="ti ti-cart"></i> Cart</a>
+       <a href="contact.html"><i class="ti ti-message"></i> Contact</a>
+       <a href="signin.html"><i class="ti ti-user"></i> Sign In</a>
+     </div>
+   </div>
+ </body>
+</html>

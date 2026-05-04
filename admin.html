@@ -1,251 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>INKSPIRED | Admin Control Room</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="dashboard.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Authentication | INKSPIRED</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_append.css">
 </head>
-<body>
-  <section id="adminAuthScreen" class="auth-screen">
-    <div class="auth-card glass-panel">
-      <aside class="auth-aside">
-        <span class="eyebrow"><i class="fa-solid fa-shield-halved"></i> System Moderation</span>
-        <div class="brand-mark">INK<span>SPIRED</span></div>
-        <h1 class="auth-title">Run the marketplace like a premium product, not a spreadsheet.</h1>
-        <p class="auth-copy">
-          Moderate submissions, monitor revenue, review catalog health, and keep user, order, and review data organized. If live connectivity fails, the control room can still operate in demo mode with local system data.
-        </p>
-        <div class="auth-feature-list">
-          <div class="auth-feature">
-            <i class="fa-solid fa-crown"></i>
-            <div>
-              <strong>Real moderation controls</strong>
-              <div>Approve, reject, feature, or delete apps from a unified app management view.</div>
-            </div>
-          </div>
-          <div class="auth-feature">
-            <i class="fa-solid fa-chart-pie"></i>
-            <div>
-              <strong>Marketplace analytics</strong>
-              <div>Track revenue, orders, category health, user mix, and pending inventory at a glance.</div>
-            </div>
-          </div>
-          <div class="auth-feature">
-            <i class="fa-solid fa-database"></i>
-            <div>
-              <strong>Demo-safe control room</strong>
-              <div>Local demo mode mirrors storefront fallback behavior so the whole system can still be exercised offline.</div>
-            </div>
-          </div>
-        </div>
-      </aside>
+<body style="margin: 0; padding: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #FFF5F7;">
 
-      <div class="auth-form-card glass-panel">
-        <h2>Admin Sign In</h2>
-        <p>Enter the live control room or inspect the local demo marketplace.</p>
-        <form id="adminLoginForm" class="auth-form">
-          <div class="form-group">
-            <label for="adminEmail">Email</label>
-            <input id="adminEmail" class="form-input" type="email" placeholder="admin@inkspired.com" required />
-          </div>
-          <div class="form-group">
-            <label for="adminPassword">Password</label>
-            <input id="adminPassword" class="form-input" type="password" placeholder="••••••••" required />
-          </div>
-          <div class="auth-actions">
-            <button id="adminLoginBtn" class="btn-primary btn-block" type="submit">
-              <i class="fa-solid fa-shield"></i> Sign In
-            </button>
-            <button id="demoAdminBtn" class="btn-secondary btn-block" type="button">
-              <i class="fa-solid fa-flask"></i> Open Demo Control Room
-            </button>
-          </div>
-        </form>
-        <p id="adminAuthNote" class="support-note">Checking your admin session...</p>
+  <!-- Authentication Card -->
+  <div style="width: 100%; max-width: 480px; padding: 32px;">
+    <div class="glass-panel" style="background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(194, 94, 124, 0.15); border-radius: 24px; padding: 40px; box-shadow: 0 20px 60px -10px rgba(194, 94, 124, 0.15);">
+
+      <!-- Back Button -->
+      <div style="text-align: left; margin-bottom: 20px;">
+        <a href="index.html" style="display: inline-flex; align-items: center; gap: 8px; color: #c25e7c; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 8px 12px; border: 1px solid rgba(194, 94, 124, 0.2); border-radius: 8px; transition: all 0.3s; background: rgba(255, 255, 255, 0.5);">
+          <i class="ti ti-arrow-left" style="font-size: 1rem;"></i> Back to Home
+        </a>
       </div>
-    </div>
-  </section>
 
-  <div id="adminApp" class="dashboard-app hidden">
-    <div class="dashboard-shell">
-      <aside class="sidebar">
-        <div class="sidebar-brand">
-          <div class="brand-mark">INK<span>SPIRED</span></div>
-          <span id="adminModePill" class="mode-pill">Loading</span>
+      <!-- Logo & Title -->
+      <div style="text-align: center; margin-bottom: 40px;">
+        <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2rem; color: #1A0F14; margin-bottom: 8px;">
+          INK<span style="color: #c25e7c;">SPIRED</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 6px; color: #c25e7c; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">
+          <i class="fa-solid fa-crown"></i> Admin Access
+        </div>
+        <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: #1A0F14; margin: 0 0 8px;">Administrator Login</h1>
+        <p style="color: #6b7280; font-size: 0.9rem; margin: 0;">Enter your credentials to access the dashboard</p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div style="margin-bottom: 20px;">
+          <label for="adminEmail" style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.875rem; color: #1A0F14;">Email Address</label>
+          <input type="email" id="adminEmail" class="form-input" placeholder="admin@inkspired.com" required style="width: 100%; padding: 14px 16px; border: 1px solid rgba(194, 94, 124, 0.2); border-radius: 12px; font-size: 1rem; background: white; transition: all 0.2s; box-sizing: border-box;">
         </div>
 
-        <nav class="nav-list">
-          <button class="nav-button active" data-admin-section="overview" type="button"><i class="fa-solid fa-chart-pie"></i> Overview</button>
-          <button class="nav-button" data-admin-section="apps" type="button"><i class="fa-solid fa-mobile-screen"></i> Apps</button>
-          <button class="nav-button" data-admin-section="orders" type="button"><i class="fa-solid fa-receipt"></i> Orders</button>
-          <button class="nav-button" data-admin-section="users" type="button"><i class="fa-solid fa-users"></i> Users</button>
-          <button class="nav-button" data-admin-section="reviews" type="button"><i class="fa-solid fa-star"></i> Reviews</button>
-        </nav>
-
-        <div class="sidebar-footer">
-          <div id="adminModeNote" class="sidebar-note">Preparing control room...</div>
-          <a class="btn-ghost" href="index.html"><i class="fa-solid fa-store"></i> Back to Store</a>
-          <button id="logoutAdminBtn" class="btn-danger" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        <div style="margin-bottom: 28px;">
+          <label for="adminPass" style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.875rem; color: #1A0F14;">Password</label>
+          <input type="password" id="adminPass" class="form-input" placeholder="Enter your password" required style="width: 100%; padding: 14px 16px; border: 1px solid rgba(194, 94, 124, 0.2); border-radius: 12px; font-size: 1rem; background: white; transition: all 0.2s; box-sizing: border-box;">
         </div>
-      </aside>
 
-      <section class="workspace">
-        <header class="topbar">
-          <div class="topbar-title">
-            <h1 id="adminIdentity">Admin</h1>
-            <p id="adminTopbarText">Loading control room...</p>
-          </div>
-          <div class="topbar-actions">
-            <button id="refreshAdminBtn" class="btn-secondary" type="button"><i class="fa-solid fa-rotate"></i> Refresh Data</button>
-          </div>
-        </header>
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 16px; font-size: 1rem; font-weight: 700; border-radius: 9999px; border: none; background: linear-gradient(135deg, #c25e7c, #a0455d); color: white; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 24px rgba(194, 94, 124, 0.25); margin-bottom: 20px;">
+          <i class="ti ti-lock" style="margin-right: 8px;"></i> Sign In
+        </button>
+      </form>
 
-        <main>
-          <section class="dashboard-section" data-admin-panel="overview">
-            <div class="card-grid">
-              <article class="metric-card glass-panel">
-                <h3>Total Revenue</h3>
-                <div id="adminMetricRevenue" class="metric-value">₱0</div>
-                <div id="adminSystemSummary" class="metric-meta">Loading user mix...</div>
-              </article>
-              <article class="metric-card glass-panel">
-                <h3>Orders</h3>
-                <div id="adminMetricOrders" class="metric-value">0</div>
-                <div class="metric-meta">Remote plus local fallback activity</div>
-              </article>
-              <article class="metric-card glass-panel">
-                <h3>Total Apps</h3>
-                <div id="adminMetricApps" class="metric-value">0</div>
-                <div class="metric-meta">Live and queued catalog entries</div>
-              </article>
-              <article class="metric-card glass-panel">
-                <h3>Total Users</h3>
-                <div id="adminMetricUsers" class="metric-value">0</div>
-                <div class="metric-meta">Profiles in the marketplace</div>
-              </article>
-              <article class="metric-card glass-panel">
-                <h3>Pending Apps</h3>
-                <div id="adminMetricPendingApps" class="metric-value">0</div>
-                <div class="metric-meta">Awaiting moderation</div>
-              </article>
-              <article class="metric-card glass-panel">
-                <h3>Approved Apps</h3>
-                <div id="adminMetricApprovedApps" class="metric-value">0</div>
-                <div class="metric-meta">Currently visible in the store</div>
-              </article>
-            </div>
 
-            <div class="split-layout">
-              <article class="panel glass-panel">
-                <div class="panel-header">
-                  <div>
-                    <h3>Recent Marketplace Activity</h3>
-                    <p>Latest order flow and incoming catalog changes.</p>
-                  </div>
-                </div>
-                <div id="adminActivityFeed" class="activity-list"></div>
-              </article>
-
-              <article class="panel glass-panel">
-                <div class="panel-header">
-                  <div>
-                    <h3>Catalog Health</h3>
-                    <p>Category distribution across the current app inventory.</p>
-                  </div>
-                </div>
-                <div id="adminHealthBoard" class="progress-list"></div>
-              </article>
-            </div>
-          </section>
-
-          <section class="dashboard-section hidden" data-admin-panel="apps">
-            <article class="panel glass-panel">
-              <div class="toolbar">
-                <div>
-                  <h3>App Moderation</h3>
-                  <p>Search, approve, reject, feature, or delete any listing in the marketplace.</p>
-                </div>
-                <div class="toolbar-actions">
-                  <input id="adminAppSearch" class="form-input" type="search" placeholder="Search apps, creators, categories..." />
-                </div>
-              </div>
-
-              <div class="toolbar-filters">
-                <button class="chip-filter active" type="button" data-admin-app-status="all">All</button>
-                <button class="chip-filter" type="button" data-admin-app-status="pending">Pending</button>
-                <button class="chip-filter" type="button" data-admin-app-status="approved">Approved</button>
-                <button class="chip-filter" type="button" data-admin-app-status="rejected">Rejected</button>
-              </div>
-
-              <div id="adminAppsGrid" class="moderation-grid" style="margin-top:18px"></div>
-            </article>
-          </section>
-
-          <section class="dashboard-section hidden" data-admin-panel="orders">
-            <article class="table-card glass-panel">
-              <div class="toolbar">
-                <div>
-                  <h3>Order Ledger</h3>
-                  <p>Review both remote marketplace orders and browser-local fallback checkouts.</p>
-                </div>
-                <div class="toolbar-actions">
-                  <select id="adminOrderStatus" class="form-input">
-                    <option value="all">All statuses</option>
-                    <option value="pending">Pending</option>
-                    <option value="paid">Paid</option>
-                    <option value="processing">Processing</option>
-                    <option value="cancelled">Cancelled</option>
-                  </select>
-                </div>
-              </div>
-              <div id="adminOrdersTable"></div>
-            </article>
-          </section>
-
-          <section class="dashboard-section hidden" data-admin-panel="users">
-            <article class="panel glass-panel">
-              <div class="toolbar">
-                <div>
-                  <h3>User Directory</h3>
-                  <p>Profiles across buyers, developers, and administrators.</p>
-                </div>
-                <div class="toolbar-actions">
-                  <input id="adminUserSearch" class="form-input" type="search" placeholder="Search users by name, email, role..." />
-                </div>
-              </div>
-              <div id="adminUsersGrid" class="spotlight-grid"></div>
-            </article>
-          </section>
-
-          <section class="dashboard-section hidden" data-admin-panel="reviews">
-            <article class="panel glass-panel">
-              <div class="toolbar">
-                <div>
-                  <h3>Review Moderation</h3>
-                  <p>Inspect review quality and remove problematic marketplace feedback.</p>
-                </div>
-                <div class="toolbar-actions">
-                  <input id="adminReviewSearch" class="form-input" type="search" placeholder="Search reviewer, app, or comment..." />
-                </div>
-              </div>
-              <div id="adminReviewsGrid" class="review-grid"></div>
-            </article>
-          </section>
-        </main>
-      </section>
     </div>
   </div>
 
-  <div id="toast" role="status" aria-live="polite"></div>
+  <!-- Success Redirect Overlay (shown after successful login) -->
+  <div id="successOverlay" style="display: none; position: fixed; inset: 0; background: rgba(26, 15, 20, 0.9); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="text-align: center; color: white;">
+      <i class="ti ti-check" style="font-size: 4rem; color: #10b981; margin-bottom: 24px;"></i>
+      <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; margin: 0 0 8px;">Authentication Successful</h2>
+      <p style="color: rgba(255,255,255,0.8); margin-bottom: 24px;">Redirecting to admin dashboard...</p>
+    </div>
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js"></script>
-  <script src="dashboard-shared.js"></script>
-  <script src="admin-dashboard.js"></script>
+  <script>
+    // Admin credentials (in production, this would be server-side)
+    const ADMIN_EMAIL = 'admin@inkspired.com';
+    const ADMIN_PASSWORD = 'admin123';
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('adminEmail').value.trim();
+      const password = document.getElementById('adminPass').value;
+      
+      if (!email || !password) {
+        alert('Please enter both email and password');
+        return;
+      }
+      
+      // Validate credentials
+      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        // Store admin session
+        const adminSession = {
+          email: email,
+          name: 'Administrator',
+          role: 'admin',
+          loggedInAt: new Date().toISOString()
+        };
+        localStorage.setItem('inkspired_admin_session', JSON.stringify(adminSession));
+        
+        // Show success overlay briefly before redirect
+        document.getElementById('successOverlay').style.display = 'flex';
+        
+        setTimeout(() => {
+          window.location.href = 'admin-dashboard.html';
+        }, 1500);
+      } else {
+        alert('Invalid credentials. Please check your email and password.');
+        // Shake animation for error feedback
+        const form = document.querySelector('.glass-panel');
+        form.style.animation = 'shake 0.5s';
+        setTimeout(() => form.style.animation = '', 500);
+      }
+    }
+
+    // Add shake animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        75% { transform: translateX(10px); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Check if already logged in
+    document.addEventListener('DOMContentLoaded', () => {
+      const session = localStorage.getItem('inkspired_admin_session');
+      if (session) {
+        try {
+          const adminData = JSON.parse(session);
+          if (adminData.role === 'admin') {
+            // Already logged in, redirect to dashboard
+            window.location.href = 'admin-dashboard.html';
+          }
+        } catch (e) {
+          localStorage.removeItem('inkspired_admin_session');
+        }
+      }
+    });
+  </script>
 </body>
 </html>
